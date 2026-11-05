@@ -265,6 +265,8 @@ details ul{margin:0;padding:0 36px 16px 18px;display:flex;flex-direction:column;
 .wa-replies button:focus-visible{outline:2px solid #008069;outline-offset:2px}
 .wa-foot{flex:none;background:#f0f2f5;font-size:12px;color:#54656f;padding:9px 14px 14px;text-align:center;display:flex;flex-direction:column;gap:2px;align-items:center}
 .wa-foot .ap-link{font-size:12px;color:#54656f}
+.wa-again{align-self:center;font:inherit;font-size:14px;font-weight:600;background:#ffffff;color:#008069;border:0;border-radius:18px;padding:8px 16px;cursor:pointer;margin-top:8px}
+.wa-again:focus-visible{outline:2px solid #008069;outline-offset:2px}
 
 /* דמו, שלב 2: שאלון מורחב וכרטיסי מטפלים */
 .ap-voice.sm{font-size:23px}
@@ -431,13 +433,14 @@ img{max-width:100%}
               <p class="ap-small">אפשר לבטל או לשנות עד 24 שעות לפני, בלי להסביר למה.</p>
               <div class="ap-grow"></div>
               <button type="button" class="ap-cta ap-cta-soft" data-go="6" id="d-side"></button>
+              <button type="button" class="ap-link" id="d-restart">להתחיל מחדש עם תשובות אחרות</button>
             </div>
           </section>
 
           <section class="ap-s ap-wa" data-s="6" hidden>
             <div class="wa-head"><button type="button" class="wa-back" data-go="5" aria-label="חזרה">→</button><span class="ap-logo">יש</span><div><b>יש מקום</b><span id="wa-sub"></span></div></div>
             <div class="wa-chat" id="wa-chat"></div>
-            <div class="wa-foot">את מי לקבל (גילאים, נושאים, זוגות ומשפחות) המטפל מגדיר פעם אחת בהצטרפות, ולכן מגיעות אליו רק התאמות כאלה. בפיילוט זה וואטסאפ אמיתי. <button type="button" class="ap-link" id="wa-reset">להתחיל מחדש</button></div>
+            <div class="wa-foot">את מי לקבל (גילאים, נושאים, זוגות ומשפחות) המטפל מגדיר פעם אחת בהצטרפות, ולכן מגיעות אליו רק התאמות כאלה. בפיילוט זה וואטסאפ אמיתי. <button type="button" class="ap-link" id="wa-reset">להתחיל הכל מההתחלה</button></div>
           </section>
         </div>
       </div>
@@ -899,15 +902,24 @@ img{max-width:100%}
       if(st.req===1){h+=msg("wa-out","לאשר","12:52")+msg("wa-in","מעולה. שלחנו ל"+esc(who)+" אישור. הטלפון: 050-0000000 (לדוגמה). נזכיר לשניכם יום לפני.","12:52")}
       if(st.req===2){h+=msg("wa-out","לא מתאים לי","12:52")+msg("wa-in","תודה שעדכנת. נציע ל"+esc(who)+" מטפל אחר עם מקום השבוע. לא צריך להסביר.","12:52")}
     }
+    if(st.req!==0||st.n==="0") h+='<button type="button" class="wa-again" id="wa-again">↺ לנסות שוב עם תשובות אחרות</button>';
     var c=$("wa-chat"); c.innerHTML=h; c.scrollTop=c.scrollHeight;
   }
   $("wa-chat").addEventListener("click",function(e){
+    if(e.target.closest("#wa-again")){resetAll();return}
     var b=e.target.closest(".wa-replies button"); if(!b) return;
     var k=b.parentNode.dataset.k;
     if(k==="n"){st.n=b.textContent;st.wa=1}else if(k==="h"){st.h=b.textContent;st.wa=2}else{st.req=b.textContent==="לאשר"?1:2}
     renderChat();
   });
-  $("wa-reset").addEventListener("click",function(){st.wa=0;st.n=null;st.h=null;st.req=0;renderChat()});
+  function resetAll(){
+    st.q=0; st.a={who:null,age:null,topics:[],style:null,mode:null,time:null,pmax:350};
+    st.list=[]; st.t=null; st.slot=null; st.booked=false; st.name=""; st.share=false; st.req=0; st.wa=0; st.n=null; st.h=null;
+    var n1=$("ap-name"),n2=$("ap-tel"); if(n1) n1.value=""; if(n2) n2.value="";
+    go(2);
+  }
+  $("wa-reset").addEventListener("click",resetAll);
+  $("d-restart").addEventListener("click",resetAll);
 })();
 </script>
 <script>
