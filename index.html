@@ -231,6 +231,10 @@ details ul{margin:0;padding:0 36px 16px 18px;display:flex;flex-direction:column;
   .ap-in,.wa-chat{overflow:visible}
   .wa-chat{min-height:420px}
 }
+.ap-notify{background:var(--a-time-bg);border-radius:14px;padding:14px 16px}
+.ap-notify > div{display:flex;flex-direction:column;gap:8px}
+.ap-notify b{color:var(--a-time);font-size:16px}
+.ap-notify .ap-consent{font-size:14px}
 .who-row{display:flex;gap:10px;align-items:center}
 .ph{flex:none;width:44px;height:44px;border-radius:10px;overflow:hidden;display:block}
 .ph.lg{width:64px;height:64px;border-radius:14px}
@@ -386,6 +390,11 @@ img{max-width:100%}
               <div class="ap-top"><button type="button" class="ap-back" id="o-back">→ חזרה</button><span class="ap-meta">יום שני, 9 בנובמבר</span></div>
               <h3 class="ap-voice sm" id="o-title"></h3>
               <p class="ap-soft ap-small" id="o-sub"></p>
+              <div class="ap-notify" id="o-notify" hidden>
+                <div id="n-ask"><b>רוצה שנעדכן אותך ראשון?</b><p class="ap-small">כשמטפל שמתאים בדיוק לתשובות שלך יאשר מקום, נשלח לך הודעה.</p><button type="button" class="ap-cta" id="n-open">לעדכן אותי כשיתפנה מקום</button></div>
+                <div id="n-form" hidden><b>לאן לשלוח את העדכון?</b><label class="ap-field" for="ap-n-name">שם פרטי<input id="ap-n-name" type="text" autocomplete="off" placeholder="לדוגמה: עמית"></label><label class="ap-field" for="ap-n-tel">טלפון לוואטסאפ<input id="ap-n-tel" type="tel" inputmode="tel" autocomplete="off" placeholder="050-0000000" dir="ltr"></label><label class="ap-consent" for="ap-n-consent"><input type="checkbox" id="ap-n-consent"><span>אני מסכים/ה לקבל עדכון אחד בוואטסאפ כשיתפנה מקום</span></label><p class="ap-hint" id="n-hint" aria-live="polite"></p><button type="button" class="ap-cta" id="n-save">לשמור</button></div>
+                <div id="n-done" hidden><b>נשמר.</b><p class="ap-small" id="n-done-t"></p></div>
+              </div>
               <div class="ap-cards" id="o-cards"></div>
               <p class="ap-small">זו לא אבחנה. בפגישה הראשונה תחליטו יחד מה מתאים.</p>
               <button type="button" class="ap-link" id="o-change">לשנות תשובות</button>
@@ -463,7 +472,7 @@ img{max-width:100%}
       <ol class="flow-steps" aria-label="שלבי הדמו">
         <li><button type="button" class="dm-step" data-go="1" aria-pressed="true"><span class="n">1</span><span><b>הדחיפה</b><span class="d">פוסט ברשתות שלא שואל מה עובר עליך. הוא רק אומר שבקופות מחכים חצי שנה, ושיש מטפלים עם מקום השבוע.</span></span></button></li>
         <li><button type="button" class="dm-step" data-go="2" aria-pressed="false"><span class="n">2</span><span><b>השאלון</b><span class="d">למי הטיפול וגיל, מה מעסיק אותך (רשות), איזה טיפול ירגיש נכון, איפה, מתי וכמה. בלי אבחנה ובלי הסיבה לפנייה.</span></span></button></li>
-        <li><button type="button" class="dm-step" data-go="3" aria-pressed="false"><span class="n">3</span><span><b>עד שלושה מטפלים</b><span class="d">רק מי שאישר מקום השבוע ומתאים למי שהוא מקבל. הראשון הכי מתאים, ולכל אחד כתוב למה.</span></span></button></li>
+        <li><button type="button" class="dm-step" data-go="3" aria-pressed="false"><span class="n">3</span><span><b>עד שלושה מטפלים</b><span class="d">רק מי שאישר מקום השבוע ומתאים למי שהוא מקבל. הראשון הכי מתאים, ולכל אחד כתוב למה. אם אין התאמה מדויקת, אפשר לבקש עדכון ראשון.</span></span></button></li>
         <li><button type="button" class="dm-step" data-go="4" aria-pressed="false"><span class="n">4</span><span><b>ההיכרות</b><span class="d">מי זה, הרישום המקצועי, משפט במילים שלו, ושעות פנויות השבוע. אף שעה לא מסומנת מראש.</span></span></button></li>
         <li><button type="button" class="dm-step" data-go="5" aria-pressed="false"><span class="n">5</span><span><b>אישור</b><span class="d">שם פרטי וטלפון. מה עוד עובר למטפל, רק אם מסמנים. ומה קורה מכאן ועד הפגישה.</span></span></button></li>
         <li><button type="button" class="dm-step" data-go="6" aria-pressed="false"><span class="n">6</span><span><b>הצד של המטפל</b><span class="d">הודעה שבועית על מקום פנוי, ובקשה לכל פגישה חדשה. אפשר לאשר או לסרב, בלי להסביר.</span></span></button></li>
@@ -706,7 +715,7 @@ img{max-width:100%}
   var TOPIC={anxiety:"לחץ וחרדה",mood:"מצב רוח",relationship:"זוגיות ומשפחה",trauma:"אחרי אירוע קשה",work:"עבודה ולימודים"};
   var WHO={child:"עם ילדים",teen:"עם נוער",couple:"עם זוגות",family:"עם משפחות",young:"עם צעירים",older:"עם אנשים בגיל 65 ומעלה"};
 
-  var st={s:1,q:0,a:{who:null,age:null,topics:[],style:null,mode:null,time:null,pmax:350},list:[],t:null,slot:null,booked:false,name:"",share:false,req:0,wa:0,n:null,h:null};
+  var st={s:1,q:0,a:{who:null,age:null,topics:[],style:null,mode:null,time:null,pmax:350},list:[],t:null,slot:null,booked:false,name:"",share:false,req:0,notify:0,wa:0,n:null,h:null};
   function whoKey(){var a=st.a;return a.who==="self"?(a.age||"adult"):(a.who||"adult")}
   function g(t,f,m){return t.f?f:m}
   function first(t){return t.n.split(" ")[0]}
@@ -794,7 +803,7 @@ img{max-width:100%}
     var q=Q[st.q];
     if(!answered(q)){$("q-hint").textContent=q.type==="two"?"בחר/י גם איפה וגם מתי. אם אין העדפה, אפשר \"לא משנה\".":(q.type==="who"&&st.a.who==="self")?"בחר/י גם גיל, כדי שנציע מי שעובד עם הגיל הזה.":"בחר/י תשובה אחת כדי להמשיך.";return}
     if(st.q<Q.length-1){st.q++;renderQuiz();$("q-in").scrollTop=0}
-    else{match();st.t=null;st.slot=null;go(3)}
+    else{match();st.t=null;st.slot=null;st.notify=0;go(3)}
   });
   $("q-back").addEventListener("click",function(){if(st.q>0){st.q--;renderQuiz()}else go(1)});
 
@@ -818,10 +827,23 @@ img{max-width:100%}
         +'</button>';
     });
     $("o-cards").innerHTML=h;
+    renderNotify(!L.length||!L[0].exact);
   }
   $("o-cards").addEventListener("click",function(e){
     var b=e.target.closest(".ap-card"); if(!b) return;
     st.t=st.list[+b.dataset.i].t; st.slot=null; st.booked=false; go(4);
+  });
+  function renderNotify(show){
+    var b=$("o-notify"); b.hidden=!show; if(!show) return;
+    $("n-ask").hidden=st.notify!==0; $("n-form").hidden=st.notify!==1; $("n-done").hidden=st.notify!==2; $("n-hint").textContent="";
+  }
+  $("n-open").addEventListener("click",function(){st.notify=1;renderNotify(true)});
+  $("n-save").addEventListener("click",function(){
+    var tel=$("ap-n-tel").value.replace(/\D/g,""), nm=$("ap-n-name").value.trim().slice(0,20);
+    if(tel.length<9){renderNotify(true);$("n-hint").textContent="צריך מספר טלפון, כדי שנוכל לעדכן אותך.";return}
+    if(!$("ap-n-consent").checked){renderNotify(true);$("n-hint").textContent="צריך לסמן הסכמה לקבל את העדכון בוואטסאפ.";return}
+    st.notify=2; renderNotify(true);
+    $("n-done-t").textContent=(nm?nm+", ":"")+"נעדכן אותך בוואטסאפ ברגע שמטפל שמתאים לתשובות שלך יאשר מקום. הבקשה נשמרת לחודש, ואפשר לבטל בכל רגע בהודעה אחת. בינתיים אפשר לבחור מאחד הקרובים למטה.";
   });
   $("o-back").addEventListener("click",function(){st.q=Q.length-1;go(2)});
   $("o-change").addEventListener("click",function(){st.q=0;go(2)});
@@ -930,7 +952,7 @@ img{max-width:100%}
   function resetAll(){
     st.q=0; st.a={who:null,age:null,topics:[],style:null,mode:null,time:null,pmax:350};
     st.list=[]; st.t=null; st.slot=null; st.booked=false; st.name=""; st.share=false; st.req=0; st.wa=0; st.n=null; st.h=null;
-    st.ageN=null; var n1=$("ap-name"),n2=$("ap-tel"),n3=$("ap-age"); if(n1) n1.value=""; if(n2) n2.value=""; if(n3) n3.value="";
+    st.ageN=null; st.notify=0; ["ap-n-name","ap-n-tel"].forEach(function(i){var x=$(i); if(x) x.value=""}); if($("ap-n-consent")) $("ap-n-consent").checked=false; var n1=$("ap-name"),n2=$("ap-tel"),n3=$("ap-age"); if(n1) n1.value=""; if(n2) n2.value=""; if(n3) n3.value="";
     go(2);
   }
   $("wa-reset").addEventListener("click",resetAll);
