@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#fbfbf9">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="יש מקום">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<title>יש מקום</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap">
+<style>
+/* האפליקציה בתוך הטלפון */
+.ap-phone{background:#1d2422;border-radius:40px;padding:9px;width:100%;max-width:340px;justify-self:center;box-shadow:0 0 0 1px var(--line)}
+.ap-screen{
+  --a-bg:#fbfbf9;--a-ink:#1b1d1c;--a-soft:#646a67;--a-line:#e3e5e1;--a-time:#1f5b51;--a-time-bg:#e3eee9;--a-on:#ffffff;--a-err:#8a3d12;
+  border-radius:32px;height:660px;overflow:hidden;background:var(--a-bg);color:var(--a-ink);
+  font-family:"Assistant","Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.55;display:flex;flex-direction:column;color-scheme:light}
+.ap-status{display:flex;justify-content:space-between;align-items:center;padding:13px 24px 2px;font-size:12px;font-weight:600;direction:ltr;flex:none;color:var(--a-ink)}
+.ap-status i{display:inline-block;width:22px;height:10px;border-radius:3px;border:1.5px solid currentColor;opacity:.6}
+.ap-s{flex:1;min-height:0;display:flex;flex-direction:column}
+.ap-s[hidden]{display:none}
+.ap-in{flex:1;min-height:0;display:flex;flex-direction:column;gap:14px;padding:14px 22px 18px;overflow-y:auto;scrollbar-width:none}
+.ap-in::-webkit-scrollbar{display:none}
+.ap-in[hidden]{display:none}
+@media (prefers-reduced-motion:no-preference){.ap-s:not([hidden]) .ap-in:not([hidden]),.ap-wa:not([hidden]) .wa-chat{animation:apin .26s ease-out}}
+@keyframes apin{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}
+.ap-voice{font-family:"Frank Ruhl Libre",Georgia,serif;font-weight:400;font-size:26px;line-height:1.3;margin:0;text-wrap:balance;color:var(--a-ink)}
+.ap-green{color:var(--a-time)}
+.ap-soft{color:var(--a-soft);margin:0}
+.ap-small{font-size:13px;color:var(--a-soft);margin:0}
+.ap-grow{flex:1}
+.ap-label{font-size:12px;color:var(--a-soft)}
+.ap-top{display:flex;justify-content:space-between;align-items:center}
+.ap-meta{font-size:13px;color:var(--a-soft)}
+.ap-back{font:inherit;font-size:14px;background:none;border:0;color:var(--a-soft);padding:4px 0;cursor:pointer}
+.ap-sos{font-size:12px;color:var(--a-soft);text-align:center}
+.ap-cta{font:inherit;font-weight:700;font-size:17px;background:var(--a-ink);color:var(--a-bg);border:0;border-radius:14px;padding:14px;cursor:pointer;width:100%}
+.ap-cta.is-wait{background:var(--a-line);color:var(--a-soft)}
+.ap-cta-soft{background:var(--a-time-bg);color:var(--a-time)}
+.ap-link{font:inherit;font-size:14px;background:none;border:0;color:var(--a-soft);text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:2px 0;align-self:center}
+.ap-hint{margin:0;font-size:14px;color:var(--a-err);min-height:0}
+.ap-hint:empty{display:none}
+.ap-fake{font-size:11px;color:var(--a-soft);text-align:center}
+.ap-screen button:focus-visible,.ap-screen input:focus-visible{outline:2px solid var(--a-time);outline-offset:2px}
+
+/* פוסט */
+.ap-post{display:flex;flex-direction:column;gap:12px}
+.ap-post-head{display:flex;gap:10px;align-items:center}
+.ap-post-head b{display:block;font-size:15px;line-height:1.2}
+.ap-post-head span{font-size:12px;color:var(--a-soft)}
+.ap-logo{flex:none;width:34px;height:34px;border-radius:50%;background:var(--a-time);color:var(--a-on);display:flex;align-items:center;justify-content:center;font-family:"Frank Ruhl Libre",Georgia,serif;font-size:15px;font-weight:700;letter-spacing:-.02em}
+.ap-post-head .ap-logo,.wa-head .ap-logo{color:var(--a-on);font-size:15px}
+.ap-post-art{background:var(--a-time-bg);border-radius:16px;aspect-ratio:1/1;max-width:100%;padding:24px 22px;display:flex;flex-direction:column;justify-content:center;gap:12px}
+.ap-post-art .ap-voice{font-size:25px}
+.ap-cap{margin:0;font-size:15px}
+
+/* שאלון */
+.ap-prog{display:flex;gap:6px}
+.ap-prog span{flex:1;height:4px;border-radius:2px;background:var(--a-line)}
+.ap-prog span.on{background:var(--a-time)}
+.ap-opts{display:flex;flex-direction:column}
+.ap-opt{font:inherit;font-size:18px;text-align:right;background:none;border:0;border-bottom:1px solid var(--a-line);color:var(--a-ink);padding:14px 2px;display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer}
+.ap-opt:first-child{border-top:1px solid var(--a-line)}
+.ap-opt .mk{width:20px;height:20px;border-radius:50%;border:1.5px solid #c9ccc7;flex:none;display:flex;align-items:center;justify-content:center}
+.ap-opt[aria-checked="true"]{color:var(--a-time);font-weight:600}
+.ap-opt[aria-checked="true"] .mk{border-color:var(--a-time);background:var(--a-time)}
+.ap-opt[aria-checked="true"] .mk::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--a-on)}
+
+/* היכרות */
+/* בטלפון: בלי גלילה פנימית בדמו, כדי שהאצבע תגלול את הדף ולא תיתקע בתוך הטלפון */
+@media (max-width:899px){
+  .ap-screen{height:auto;min-height:600px}
+  .ap-in,.wa-chat{overflow:visible}
+  .wa-chat{min-height:420px}
+}
+.ap-notify{background:var(--a-time-bg);border-radius:14px;padding:14px 16px}
+.ap-notify > div{display:flex;flex-direction:column;gap:8px}
+.ap-notify b{color:var(--a-time);font-size:16px}
+.ap-notify .ap-consent{font-size:14px}
+.who-row{display:flex;gap:10px;align-items:center}
+.ph{flex:none;width:44px;height:44px;border-radius:10px;overflow:hidden;display:block}
+.ph.lg{width:64px;height:64px;border-radius:14px}
+.ap-cred-row{display:flex;gap:12px;align-items:center}
+.ap-cred{display:flex;flex-direction:column;gap:3px;min-width:0}
+.ap-cred b{font-size:16px}
+.ap-cred span{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--a-time)}
+.ap-quote{margin:0;font-size:15px;line-height:1.6;color:var(--a-ink);padding-inline-start:12px;border-inline-start:2px solid var(--a-time-bg)}
+.ap-why{margin:0;font-size:14px;color:var(--a-soft)}
+.ap-why b{color:var(--a-ink);font-weight:600}
+.ap-time{background:var(--a-time-bg);border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.ap-time-lbl{font-size:14px;color:var(--a-time);font-weight:600}
+.ap-slots{display:flex;gap:8px}
+.ap-slot{font:inherit;flex:1;background:var(--a-bg);border:1.5px solid var(--a-time);color:var(--a-time);border-radius:12px;padding:8px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;line-height:1.25}
+.ap-slot b{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
+.ap-slot span{font-size:13px}
+.ap-slot[aria-pressed="true"]{background:var(--a-time);color:var(--a-on)}
+.ap-facts{display:flex;flex-direction:column;gap:2px;font-size:15px}
+.ap-facts span{color:var(--a-soft)}
+
+/* אישור */
+.ap-sum{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--a-time-bg);color:var(--a-time);border-radius:12px;padding:10px 14px;font-size:14px;font-weight:600}
+.ap-sum .ap-link{color:var(--a-time)}
+.ap-field{display:flex;flex-direction:column;gap:5px;font-size:14px;color:var(--a-soft)}
+.ap-field input{font:inherit;font-size:17px;color:var(--a-ink);background:#ffffff;border:1.5px solid var(--a-line);border-radius:12px;padding:11px 12px;width:100%}
+.ap-field input[dir="ltr"]{text-align:right}
+.ap-done-mark{padding-top:10px}
+.ap-next{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:6px;font-size:15px}
+
+/* וואטסאפ של המטפלת */
+.ap-wa{background:#efeae2}
+.wa-head{display:flex;align-items:center;gap:10px;background:#f0f2f5;padding:8px 14px 10px;flex:none}
+.wa-head b{display:block;font-size:15px;line-height:1.2;color:#111b21}
+.wa-head span{font-size:12px;color:#667781}
+.wa-back{font:inherit;font-size:18px;background:none;border:0;color:#54656f;cursor:pointer;padding:0 2px}
+.wa-chat{flex:1;min-height:0;overflow-y:auto;padding:12px 12px 6px;display:flex;flex-direction:column;gap:7px;scrollbar-width:none;font-size:15px;color:#111b21}
+.wa-chat::-webkit-scrollbar{display:none}
+.wa-day{align-self:center;background:#ffffff;color:#54656f;font-size:12px;border-radius:7px;padding:3px 10px}
+.wa-msg{max-width:84%;border-radius:10px;padding:7px 10px 5px;line-height:1.45}
+.wa-in{align-self:flex-start;background:#ffffff;border-start-start-radius:3px}
+.wa-out{align-self:flex-end;background:#d9fdd3;border-start-end-radius:3px}
+.wa-msg small{display:block;text-align:left;font-size:11px;color:#667781;margin-top:2px}
+.wa-replies{align-self:flex-start;display:flex;flex-wrap:wrap;gap:6px;max-width:92%}
+.wa-replies button{font:inherit;font-size:14px;background:#ffffff;color:#008069;border:0;border-radius:18px;padding:7px 14px;cursor:pointer;font-weight:600}
+.wa-replies button:focus-visible{outline:2px solid #008069;outline-offset:2px}
+.wa-foot{flex:none;background:#f0f2f5;font-size:12px;color:#54656f;padding:9px 14px 14px;text-align:center;display:flex;flex-direction:column;gap:2px;align-items:center}
+.wa-foot .ap-link{font-size:12px;color:#54656f}
+.wa-again{align-self:center;font:inherit;font-size:14px;font-weight:600;background:#ffffff;color:#008069;border:0;border-radius:18px;padding:8px 16px;cursor:pointer;margin-top:8px}
+.wa-again:focus-visible{outline:2px solid #008069;outline-offset:2px}
+
+/* דמו, שלב 2: שאלון מורחב וכרטיסי מטפלים */
+.ap-voice.sm{font-size:23px}
+.ap-opt .ot{display:flex;flex-direction:column;gap:1px;text-align:right}
+.ap-opt small{font-size:13px;color:var(--a-soft);font-weight:400}
+.ap-opt.multi .mk{border-radius:6px}
+.ap-opt.multi[aria-checked="true"] .mk::after{border-radius:2px}
+.ap-group{display:flex;flex-direction:column;gap:8px}
+.ap-group + .ap-group{padding-top:6px}
+.ap-group > b{font-size:15px}
+.ap-pills{display:flex;flex-wrap:wrap;gap:8px}
+.ap-pill{font:inherit;font-size:15px;background:#ffffff;border:1.5px solid var(--a-line);color:var(--a-ink);border-radius:12px;padding:8px 12px;cursor:pointer}
+.ap-pill[aria-checked="true"]{border-color:var(--a-time);background:var(--a-time-bg);color:var(--a-time);font-weight:600}
+.ap-screen .ap-pill:focus-visible,.ap-screen .ap-card:focus-visible{outline:2px solid var(--a-time);outline-offset:2px}
+.ap-cards{display:flex;flex-direction:column;gap:10px}
+.ap-card{font:inherit;text-align:right;background:#ffffff;border:1.5px solid var(--a-line);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:3px;cursor:pointer;color:var(--a-ink);width:100%}
+.ap-card:hover{border-color:var(--a-time)}
+.ap-card.best{border-color:var(--a-time);padding:14px 16px;gap:4px}
+.ap-card .tag{align-self:flex-start;background:var(--a-time);color:var(--a-on);font-size:12px;font-weight:600;border-radius:6px;padding:2px 8px;margin-bottom:3px}
+.ap-card .av{color:var(--a-time);font-weight:700;font-size:15px}
+.ap-card .nm{font-size:16px;font-weight:600;line-height:1.35}
+.ap-card .nm span{font-weight:400;color:var(--a-soft);font-size:14px}
+.ap-card .why{font-size:13px;color:var(--a-ink)}
+.ap-card .warn{font-size:13px;color:var(--a-err)}
+.ap-card .pr{font-size:13px;color:var(--a-soft)}
+.ap-card .go{font-size:13px;color:var(--a-time);font-weight:600;padding-top:2px}
+.ap-card.best .nm{font-size:17px}
+.ap-share{display:flex;flex-direction:column;gap:8px}
+.ap-consent{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--a-ink);cursor:pointer;background:#ffffff;border:1.5px solid var(--a-line);border-radius:12px;padding:10px 12px}
+.ap-consent input{width:18px;height:18px;margin:2px 0 0;accent-color:#1f5b51;flex:none}
+.ap-preview{margin:0;padding:0 14px;list-style:none;display:flex;flex-direction:column;gap:2px;font-size:13px;color:var(--a-soft)}
+.ap-preview.on{color:var(--a-ink)}
+.ap-preview li::before{content:"· "}
+.wa-msg .ln{display:block}
+.ap-age{padding-top:12px}
+.ap-range{display:flex;flex-direction:column;gap:10px;padding-top:6px}
+.ap-range-v{font-family:"Frank Ruhl Libre",Georgia,serif;font-size:24px;color:var(--a-time);line-height:1.3}
+.ap-range input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:40px;margin:0;background:transparent;direction:rtl;cursor:pointer;touch-action:none;--p:42%}
+.ap-range input[type="range"]::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:linear-gradient(to left,#1f5b51 var(--p),#d9e6df var(--p))}
+.ap-range input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:#ffffff;border:3px solid #1f5b51;margin-top:-11px;box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.ap-range input[type="range"]::-moz-range-track{height:8px;border-radius:4px;background:#d9e6df}
+.ap-range input[type="range"]::-moz-range-progress{height:8px;border-radius:4px;background:#1f5b51}
+.ap-range input[type="range"]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#ffffff;border:3px solid #1f5b51}
+.ap-range input[type="range"]:focus-visible{outline:2px solid #1f5b51;outline-offset:4px}
+.ap-range-ends{display:flex;justify-content:space-between;font-size:13px;color:var(--a-soft)}
+
+
+:root{color-scheme:light}
+html,body{margin:0;height:100%;background:#edf1ec}
+body{font-family:"Assistant","Segoe UI",Arial,sans-serif;-webkit-text-size-adjust:100%}
+[hidden]{display:none!important}
+.app{height:100%;display:flex;justify-content:center;align-items:stretch}
+.app .ap-screen{width:100%;height:100%;min-height:0;border-radius:0;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+.app .ap-status{display:none}
+.app .ap-in,.app .wa-chat{overflow-y:auto}
+.demo-bar{flex:none;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 18px;font-size:12px;color:#646a67;background:#f1f4f1;border-bottom:1px solid #e3e5e1}
+.demo-bar a{color:#1f5b51;font-weight:600;text-decoration:none}
+.a2hs{flex:none;margin:10px 16px 0;background:#e3eee9;color:#1f5b51;border-radius:12px;padding:10px 12px;font-size:13px;display:flex;gap:10px;align-items:flex-start}
+.a2hs button{font:inherit;background:none;border:0;color:#1f5b51;font-weight:700;cursor:pointer;padding:0 2px}
+@media (max-width:899px){.app .ap-screen{height:100%;min-height:0}.app .ap-in,.app .wa-chat{overflow-y:auto}}
+@media (min-width:600px){
+  .app{align-items:center;padding:20px}
+  .app .ap-screen{max-width:420px;height:min(880px,calc(100vh - 40px));border-radius:28px;box-shadow:0 0 0 1px #cfdad3,0 18px 50px rgba(20,40,30,.12)}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="ap-screen" id="ap-screen" aria-live="polite">
+          <div class="demo-bar"><span>דמו · שמות בדויים · שום דבר לא נשמר ולא נשלח</span><a href="index.html">לאתר</a></div>
+<div class="a2hs" id="a2hs" hidden><span>כדי לפתוח כמו אפליקציה: בתפריט הדפדפן או בכפתור השיתוף, "הוספה למסך הבית".</span><button type="button" id="a2hs-x" aria-label="סגירה">✕</button></div>
+
+
+          <section class="ap-s" data-s="1">
+            <div class="ap-in">
+              <div class="ap-label">ככה זה נראה בפיד</div>
+              <article class="ap-post">
+                <div class="ap-post-head"><span class="ap-logo">יש</span><div><b>יש מקום</b><span>תל אביב ואונליין</span></div></div>
+                <div class="ap-post-art">
+                  <p class="ap-voice">בקופות מחכים בממוצע חצי שנה לטיפול נפשי.</p>
+                  <p class="ap-voice ap-green">יש מטפלים עם מקום השבוע.</p>
+                </div>
+                <p class="ap-cap">חבר שלנו מהמילואים ידע הרבה זמן שמגיע לו טיפול. מה שעזר בסוף היה מישהי פנויה באותו שבוע. כמה שאלות קצרות, ולא חייבים לספר למה.</p>
+                <button type="button" class="ap-cta" data-go="2">למצוא מקום השבוע</button>
+              </article>
+              <div class="ap-grow"></div>
+              <div class="ap-sos">צריך עזרה עכשיו? ער"ן <span class="ltr">1201</span> · נט"ל <span class="ltr">1-800-363-363</span></div>
+            </div>
+          </section>
+
+          <section class="ap-s" data-s="2" hidden>
+            <div class="ap-in" id="q-in">
+              <div class="ap-top"><button type="button" class="ap-back" id="q-back">→ חזרה</button><span class="ap-meta" id="q-count"></span></div>
+              <div class="ap-prog" id="q-prog"><span></span><span></span><span></span><span></span><span></span></div>
+              <h3 class="ap-voice" id="q-title"></h3>
+              <p class="ap-soft" id="q-sub"></p>
+              <div id="q-body"></div>
+              <p class="ap-hint" id="q-hint" aria-live="polite"></p>
+              <div class="ap-grow"></div>
+              <button type="button" class="ap-cta" id="q-next">המשך</button>
+              <div class="ap-sos">צריך עזרה עכשיו? ער"ן <span class="ltr">1201</span> · נט"ל <span class="ltr">1-800-363-363</span></div>
+            </div>
+          </section>
+
+          <section class="ap-s" data-s="3" hidden>
+            <div class="ap-in" id="o-in">
+              <div class="ap-top"><button type="button" class="ap-back" id="o-back">→ חזרה</button><span class="ap-meta">יום שני, 9 בנובמבר</span></div>
+              <h3 class="ap-voice sm" id="o-title"></h3>
+              <p class="ap-soft ap-small" id="o-sub"></p>
+              <div class="ap-notify" id="o-notify" hidden>
+                <div id="n-ask"><b>רוצה שנעדכן אותך ראשון?</b><p class="ap-small">כשמטפל שמתאים בדיוק לתשובות שלך יאשר מקום, נשלח לך הודעה.</p><button type="button" class="ap-cta" id="n-open">לעדכן אותי כשיתפנה מקום</button></div>
+                <div id="n-form" hidden><b>לאן לשלוח את העדכון?</b><label class="ap-field" for="ap-n-name">שם פרטי<input id="ap-n-name" type="text" autocomplete="off" placeholder="לדוגמה: עמית"></label><label class="ap-field" for="ap-n-tel">טלפון לוואטסאפ<input id="ap-n-tel" type="tel" inputmode="tel" autocomplete="off" placeholder="050-0000000" dir="ltr"></label><label class="ap-consent" for="ap-n-consent"><input type="checkbox" id="ap-n-consent"><span>אני מסכים/ה לקבל עדכון אחד בוואטסאפ כשיתפנה מקום</span></label><p class="ap-hint" id="n-hint" aria-live="polite"></p><button type="button" class="ap-cta" id="n-save">לשמור</button></div>
+                <div id="n-done" hidden><b>נשמר.</b><p class="ap-small" id="n-done-t"></p></div>
+              </div>
+              <div class="ap-cards" id="o-cards"></div>
+              <p class="ap-small">זו לא אבחנה. בפגישה הראשונה תחליטו יחד מה מתאים.</p>
+              <button type="button" class="ap-link" id="o-change">לשנות תשובות</button>
+              <div class="ap-fake">שמות בדויים, לדוגמה. באפליקציה תופיע כאן תמונה אמיתית של המטפל.</div>
+            </div>
+          </section>
+
+          <section class="ap-s" data-s="4" hidden>
+            <div class="ap-in" id="i-in">
+              <div class="ap-top"><button type="button" class="ap-back" data-go="3">→ חזרה</button><span class="ap-meta">יום שני, 9 בנובמבר</span></div>
+              <h3 class="ap-voice" id="i-title"></h3>
+              <div class="ap-cred-row"><span class="ph lg" aria-hidden="true"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" rx="10" fill="#e3eee9"/><circle cx="20" cy="15.5" r="7" fill="#b7cdc3"/><path d="M6.5 37c1.6-8.2 7.2-12.4 13.5-12.4S31.9 28.8 33.5 37z" fill="#b7cdc3"/></svg></span><div class="ap-cred"><b id="i-name"></b><span><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="7" fill="#1f5b51"/><path d="M4 7.2l2 1.9 4-4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="i-lic"></span></span></div></div>
+              <blockquote class="ap-quote" id="i-quote"></blockquote>
+              <p class="ap-why" id="i-why"></p>
+              <div class="ap-time">
+                <span class="ap-time-lbl">בחר/י שעה השבוע</span>
+                <div class="ap-slots" id="i-slots"></div>
+                <span class="ap-small" id="i-conf"></span>
+              </div>
+              <div class="ap-facts" id="i-price"></div>
+              <p class="ap-hint" id="i-hint" aria-live="polite"></p>
+              <button type="button" class="ap-cta" id="i-cta">לבחור שעה כדי להמשיך</button>
+              <button type="button" class="ap-link" data-go="3">לחזור לאפשרויות האחרות</button>
+            </div>
+          </section>
+
+          <section class="ap-s" data-s="5" hidden>
+            <div class="ap-in" id="b-form">
+              <div class="ap-top"><button type="button" class="ap-back" data-go="4">→ חזרה</button><span class="ap-meta">כמעט סיימנו</span></div>
+              <h3 class="ap-voice">לאן לשלוח את האישור?</h3>
+              <div class="ap-sum"><span id="b-sum"></span><button type="button" class="ap-link" data-go="4">לשנות</button></div>
+              <label class="ap-field" for="ap-name">שם פרטי<input id="ap-name" type="text" autocomplete="off" placeholder="לדוגמה: עמית"></label>
+              <label class="ap-field" for="ap-tel">טלפון<input id="ap-tel" type="tel" inputmode="tel" autocomplete="off" placeholder="050-0000000" dir="ltr"></label>
+              <label class="ap-field" for="ap-age" id="b-age-l"><span id="b-age-t">הגיל שלך</span><input id="ap-age" type="number" inputmode="numeric" min="1" max="120" autocomplete="off" placeholder="לדוגמה: 34" dir="ltr"></label>
+              <p class="ap-hint" id="b-hint" aria-live="polite"></p>
+              <div class="ap-share">
+                <p class="ap-small" id="b-always"></p>
+                <label class="ap-consent" for="ap-share"><input type="checkbox" id="ap-share"><span id="b-share-l"></span></label>
+                <ul class="ap-preview" id="b-preview"></ul>
+                <p class="ap-small">בדמו לא נשמר ולא נשלח כלום.</p>
+              </div>
+              <div class="ap-grow"></div>
+              <button type="button" class="ap-cta" id="b-ok">לאשר את הפגישה</button>
+            </div>
+            <div class="ap-in" id="b-done" hidden>
+              <div class="ap-done-mark" aria-hidden="true"><svg width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="22" fill="#e3eee9"/><path d="M13 22.5l6 5.8 12-12" stroke="#1f5b51" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <h3 class="ap-voice" id="d-title"></h3>
+              <p id="d-line"></p>
+              <ol class="ap-next">
+                <li id="d-msg"></li>
+                <li id="d-rem"></li>
+                <li>אחרי הפגישה נשאל אם זה מתאים לך. אם לא, נציע מישהו אחר.</li>
+              </ol>
+              <p class="ap-small" id="d-decline"></p>
+              <p class="ap-small">אפשר לבטל או לשנות עד 24 שעות לפני, בלי להסביר למה.</p>
+              <div class="ap-grow"></div>
+              <button type="button" class="ap-cta ap-cta-soft" data-go="6" id="d-side"></button>
+              <button type="button" class="ap-link" id="d-restart">להתחיל מחדש עם תשובות אחרות</button>
+            </div>
+          </section>
+
+          <section class="ap-s ap-wa" data-s="6" hidden>
+            <div class="wa-head"><button type="button" class="wa-back" data-go="5" aria-label="חזרה">→</button><span class="ap-logo">יש</span><div><b>יש מקום</b><span id="wa-sub"></span></div></div>
+            <div class="wa-chat" id="wa-chat"></div>
+            <div class="wa-foot">את מי לקבל (גילאים, נושאים, זוגות ומשפחות) המטפל מגדיר פעם אחת בהצטרפות, ולכן מגיעות אליו רק התאמות כאלה. בפיילוט זה וואטסאפ אמיתי. <button type="button" class="ap-link" id="wa-reset">להתחיל הכל מההתחלה</button></div>
+          </section>
+        </div>
+</div>
+<script>
+(function(){
+  var root=document.getElementById("ap-screen"); if(!root) return;
+  function $(id){return document.getElementById(id)}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+  var Q=[
+    {k:"who",type:"who",t:"בשביל מי הטיפול?",sub:"כדי להציע רק מי שעובד עם הגיל הזה, או עם זוגות ומשפחות.",
+     o:[["self","לי"],["child","לילד או לילדה, עד גיל 12"],["teen","לנער או לנערה, 13 עד 18"],["couple","לנו, כזוג"],["family","למשפחה"]],
+     ages:[["young","18 עד 25"],["adult","26 עד 64"],["older","65 ומעלה"]]},
+    {k:"topics",type:"multi",t:"מה מעסיק אותך בתקופה הזו?",sub:"רשות, ואפשר לבחור כמה. זה עוזר להציע מישהו שעובד עם הנושא. זו לא אבחנה, וזה לא עובר למטפל בלי אישור שלך.",
+     o:[["none","מעדיף/ה לא לומר"],["anxiety","לחץ וחרדה"],["mood","מצב רוח"],["relationship","זוגיות ומשפחה"],["trauma","אחרי אירוע קשה"],["work","עבודה ולימודים"],["other","משהו אחר"]]},
+    {k:"style",type:"single",t:"איזה טיפול ירגיש לך נכון?",sub:"זו רק נקודת התחלה. בפגישה הראשונה תחליטו יחד אם זה מתאים.",
+     o:[["deep","לדבר לעומק ולהבין מאיפה זה מגיע","גישה דינמית"],["practical","כלים מעשיים ותרגילים בין הפגישות","CBT, טיפול קוגניטיבי-התנהגותי"],["body","גם דרך הגוף, אמנות או תנועה","טיפול באמנויות וגישות הוליסטיות"],["unsure","לא יודע/ת, תעזרו לי לבחור"]]},
+    {k:"where",type:"two",t:"איפה ומתי נוח לך?",sub:"נציע רק מי שיש לו מקום השבוע.",
+     g:[{k:"mode",l:"איפה",o:[["online","אונליין"],["near","בקליניקה, קרוב לבית"],["any","לא משנה"]]},
+        {k:"time",l:"מתי",o:[["morning","בבוקר"],["noon","אחר הצהריים"],["evening","בערב"],["any","לא משנה"]]}]},
+    {k:"pmax",type:"range",t:"כמה נוח לך לשלם לפגישה?",sub:"הזיזו עד המחיר המקסימלי. יש מטפלים בהסדר עם הקופה, ואצלם פגישה עולה 170 ₪."}
+  ];
+  var PMIN=170,PMAXV=600;
+  function priceLabel(v){return v<=PMIN?"רק בהסדר עם הקופה, 170 ₪":v>=PMAXV?"כל מחיר":"עד "+v+" ₪ לפגישה"}
+  var FOR={self:"לעצמו/ה",child:"לילד/ה עד 12",teen:"לנער/ה בגיל 13 עד 18",couple:"טיפול זוגי",family:"טיפול משפחתי"};
+  var AGE={young:"בגיל 18 עד 25",adult:"בגיל 26 עד 64",older:"בגיל 65 ומעלה"};
+  var STYLEQ={deep:"לדבר לעומק",practical:"כלים מעשיים",body:"דרך הגוף, אמנות או תנועה",unsure:"עוד לא יודע/ת"};
+  var T=[
+    {n:"דנה לוי",f:1,role:"פסיכולוגית קלינית",lic:"הרישיון נבדק בפנקס הפסיכולוגים",who:["young","adult"],topics:["anxiety","mood","work"],style:"deep",modes:["online","near"],kupa:1,price:170,slots:{evening:["19:00","20:30"],morning:["09:00","10:30"]},conf:"הבוקר",
+     q:"אני עובדת הרבה עם אנשים שמתחילים טיפול בפעם הראשונה. בפגישה הראשונה פשוט נכיר, ואת/ה מחליט/ה אם להמשיך."},
+    {n:"עמית ברק",f:0,role:"עובד סוציאלי קליני",lic:"הרישום נבדק בפנקס העובדים הסוציאליים",who:["young","adult","teen"],topics:["anxiety","work","trauma"],style:"practical",modes:["online"],kupa:0,price:300,slots:{evening:["18:00","20:00"],noon:["15:00","16:30"]},conf:"אתמול",
+     q:"אני עובד בעיקר עם כלים מעשיים. כבר מהפגישה הראשונה יוצאים עם משהו קטן לנסות."},
+    {n:"מיכל אדלר",f:1,role:"עובדת סוציאלית קלינית",lic:"הרישום נבדק בפנקס העובדים הסוציאליים",who:["adult","older"],topics:["trauma","mood","relationship"],style:"deep",modes:["online"],kupa:1,price:170,slots:{morning:["08:30","11:00"],evening:["20:00","21:00"]},conf:"הבוקר",
+     q:"הרבה אנשים מגיעים אליי אחרי תקופה קשה. אנחנו הולכים בקצב שלך, בלי לחץ לספר הכול."},
+    {n:"רות כהן",f:1,role:"פסיכולוגית קלינית, מבוגרים וגיל השלישי",lic:"הרישיון נבדק בפנקס הפסיכולוגים",who:["adult","older"],topics:["mood","relationship","anxiety","trauma"],style:"deep",modes:["near","online"],kupa:1,price:170,slots:{morning:["09:30","11:00"],noon:["14:00","15:30"]},conf:"הבוקר",
+     q:"הרבה אנשים מתחילים טיפול לראשונה אחרי גיל 65, וזה בסדר גמור. אפשר להיפגש בקליניקה, ואם קשה להגיע, גם בשיחת וידאו."},
+    {n:"נועה שגיא",f:1,role:"מטפלת באמנויות",lic:"ההסמכה נבדקה",who:["child","teen","family"],topics:["mood","trauma","relationship","anxiety"],style:"body",modes:["near"],kupa:0,price:280,slots:{noon:["15:30","17:00"],morning:["10:00","11:30"]},conf:"ביום ראשון",
+     q:"עם ילדים ונוער אנחנו מדברים גם דרך ציור ומשחק. ככה קל יותר להתחיל."},
+    {n:"אורי מזרחי",f:0,role:"פסיכולוג קליני, ילדים ונוער",lic:"הרישיון נבדק בפנקס הפסיכולוגים",who:["child","teen"],topics:["anxiety","mood","work"],style:"practical",modes:["near","online"],kupa:1,price:170,slots:{noon:["16:00","17:30"],evening:["18:30","19:30"]},conf:"הבוקר",
+     q:"בפגישה הראשונה אני נפגש קודם עם ההורים, ואחר כך עם הילד. ככה כולם יודעים מה הולך לקרות."},
+    {n:"יעל רוזן",f:1,role:"פסיכולוגית קלינית, זוגות ומשפחות",lic:"הרישיון נבדק בפנקס הפסיכולוגים",who:["couple","family"],topics:["relationship","mood","anxiety"],style:"deep",modes:["near","online"],kupa:0,price:380,slots:{evening:["19:30","21:00"],morning:["09:30","11:00"]},conf:"אתמול",
+     q:"בטיפול זוגי אני לא שופטת אף אחד מכם. התפקיד שלי הוא לעזור לכם לשמוע אחד את השני."}
+  ];
+  var DAYS=[{d:"רביעי",date:"11 בנובמבר",rem:"שלישי"},{d:"חמישי",date:"12 בנובמבר",rem:"רביעי"}];
+  var TW={morning:"בבוקר",noon:"אחר הצהריים",evening:"בערב"};
+  var STYLE={deep:"שיחה לעומק",practical:"כלים מעשיים",body:"גם דרך אמנות ותנועה"};
+  var TOPIC={anxiety:"לחץ וחרדה",mood:"מצב רוח",relationship:"זוגיות ומשפחה",trauma:"אחרי אירוע קשה",work:"עבודה ולימודים"};
+  var WHO={child:"עם ילדים",teen:"עם נוער",couple:"עם זוגות",family:"עם משפחות",young:"עם צעירים",older:"עם אנשים בגיל 65 ומעלה"};
+
+  var st={s:1,q:0,a:{who:null,age:null,topics:[],style:null,mode:null,time:null,pmax:350},list:[],t:null,slot:null,booked:false,name:"",share:false,req:0,notify:0,wa:0,n:null,h:null};
+  function whoKey(){var a=st.a;return a.who==="self"?(a.age||"adult"):(a.who||"adult")}
+  function g(t,f,m){return t.f?f:m}
+  function first(t){return t.n.split(" ")[0]}
+  function slotKey(t){var k=st.a.time;return (k&&k!=="any"&&t.slots[k])?k:Object.keys(t.slots)[0]}
+  function slotsOf(t){var s=t.slots[slotKey(t)];return DAYS.map(function(d,i){return{d:d.d,date:d.date,rem:d.rem,t:s[i]}})}
+  function whereOf(t){var m=st.a.mode;if(m==="near"&&t.modes.indexOf("near")>-1)return"בקליניקה בתל אביב";if(m==="online"&&t.modes.indexOf("online")>-1)return"אונליין";return t.modes[0]==="online"?"אונליין":"בקליניקה בתל אביב"}
+  function obj(){return(st.a.who==="couple"||st.a.who==="family")?"אתכם":"אותך"}
+
+  function score(t){
+    var a=st.a,sc=0,why=[],warn=[],exact=true;
+    if(WHO[whoKey()]) why.push(g(t,"עובדת ","עובד ")+WHO[whoKey()]);
+    if(a.style&&a.style!=="unsure"){ if(t.style===a.style){sc+=3;why.push(STYLE[t.style])} else {exact=false;warn.push("הגישה שלה: "+STYLE[t.style]); if(!t.f) warn[warn.length-1]="הגישה שלו: "+STYLE[t.style]} }
+    var tp=(a.topics||[]).filter(function(x){return TOPIC[x]&&t.topics.indexOf(x)>-1});
+    if(tp.length){sc+=2*tp.length;why.push(g(t,"עובדת","עובד")+" עם "+TOPIC[tp[0]])}
+    if(a.mode&&a.mode!=="any"){ if(t.modes.indexOf(a.mode)>-1){sc+=2;why.push(a.mode==="online"?"אונליין":"קליניקה בתל אביב")} else {exact=false;warn.push(a.mode==="online"?"רק בקליניקה":"רק אונליין")} }
+    if(a.time&&a.time!=="any"){ if(t.slots[a.time]){sc+=2;why.push(g(t,"פנויה ","פנוי ")+TW[a.time])} else {exact=false;warn.push(g(t,"פנויה השבוע רק ","פנוי השבוע רק ")+TW[Object.keys(t.slots)[0]])} }
+    var pm=a.pmax;
+    if(t.kupa){ if(pm<PMAXV){sc+=2} why.push("בהסדר עם הקופה") }
+    else if(pm<PMAXV){ if(pm>PMIN&&t.price<=pm){sc+=1} else {exact=false;warn.push("פרטי, "+t.price+" ₪ לפגישה")} }
+    return{t:t,sc:sc,why:why,warn:warn,exact:exact};
+  }
+  function match(){
+    var who=whoKey();
+    st.list=T.filter(function(t){return t.who.indexOf(who)>-1}).map(score).sort(function(x,y){return(y.exact-x.exact)||(y.sc-x.sc)}).slice(0,3);
+  }
+
+  function go(n){
+    st.s=n;
+    root.querySelectorAll(".ap-s").forEach(function(s){s.hidden=(+s.dataset.s!==n)});
+    document.querySelectorAll(".dm-step").forEach(function(b){b.setAttribute("aria-pressed",+b.dataset.go===n?"true":"false")});
+    if(n>=3&&!st.list.length) match();
+    if(n>=4&&!st.t) st.t=st.list[0].t;
+    if(n===2) renderQuiz(); if(n===3) renderOptions(); if(n===4) renderIntro(); if(n===5) renderBook(); if(n===6) renderChat();
+    root.querySelectorAll(".ap-in,.wa-chat").forEach(function(x){x.scrollTop=0});
+    if(n===6){var c=$("wa-chat");c.scrollTop=c.scrollHeight}
+  }
+  document.addEventListener("click",function(e){
+    var b=e.target.closest("[data-go]"); if(!b) return;
+    var n=+b.dataset.go;
+    if(n===2) st.q=0;
+    if(n===4) st.booked=false;
+    go(n);
+  });
+
+  /* שאלון */
+  function opt(cls,role,key,val,label,small,on){
+    return '<button type="button" class="ap-opt'+cls+'" role="'+role+'" data-k="'+key+'" data-v="'+val+'" aria-checked="'+on+'"><span class="ot">'+esc(label)+(small?'<small>'+esc(small)+'</small>':'')+'</span><span class="mk"></span></button>';
+  }
+  function answered(q){if(q.type==="multi"||q.type==="range")return true;if(q.type==="two")return !!(st.a.mode&&st.a.time);if(q.type==="who")return !!st.a.who&&(st.a.who!=="self"||!!st.a.age);return !!st.a[q.k]}
+  function pills(k,label,o){return '<div class="ap-group"><b>'+label+'</b><div class="ap-pills" role="radiogroup" aria-label="'+label+'">'+o.map(function(x){return '<button type="button" class="ap-pill" role="radio" data-k="'+k+'" data-v="'+x[0]+'" aria-checked="'+(st.a[k]===x[0])+'">'+esc(x[1])+'</button>'}).join("")+'</div></div>'}
+  function renderQuiz(){
+    var q=Q[st.q],a=st.a,h="";
+    $("q-count").textContent="שאלה "+(st.q+1)+" מתוך "+Q.length;
+    $("q-prog").querySelectorAll("span").forEach(function(s,i){s.classList.toggle("on",i<=st.q)});
+    $("q-title").textContent=q.t; $("q-sub").textContent=q.sub; $("q-hint").textContent="";
+    if(q.type==="single"){h='<div class="ap-opts" role="radiogroup" aria-label="'+esc(q.t)+'">'+q.o.map(function(o){return opt("","radio",q.k,o[0],o[1],o[2],a[q.k]===o[0])}).join("")+'</div>'}
+    if(q.type==="multi"){h='<div class="ap-opts" role="group" aria-label="'+esc(q.t)+'">'+q.o.map(function(o){return opt(" multi","checkbox",q.k,o[0],o[1],"",a.topics.indexOf(o[0])>-1)}).join("")+'</div>'}
+    if(q.type==="who"){h='<div class="ap-opts" role="radiogroup" aria-label="'+esc(q.t)+'">'+q.o.map(function(o){return opt("","radio","who",o[0],o[1],"",a.who===o[0])}).join("")+'</div>';
+      if(a.who==="self") h+='<div class="ap-age">'+pills("age","בן/בת כמה את/ה?",q.ages)+'</div>'}
+    if(q.type==="two"){h=q.g.map(function(gr){return pills(gr.k,gr.l,gr.o)}).join("")}
+    if(q.type==="range"){h='<div class="ap-range"><output class="ap-range-v" id="q-pv" for="q-p">'+priceLabel(a.pmax)+'</output>'
+      +'<input type="range" id="q-p" min="'+PMIN+'" max="'+PMAXV+'" step="1" value="'+a.pmax+'" style="--p:'+((a.pmax-PMIN)/(PMAXV-PMIN)*100)+'%" aria-label="מחיר מקסימלי לפגישה" aria-valuetext="'+priceLabel(a.pmax)+'">'
+      +'<div class="ap-range-ends"><span>170 ₪, בהסדר</span><span>כל מחיר</span></div>'
+      +'<p class="ap-small">בפרטי פגישה עולה בדרך כלל 250 עד 600 ₪.</p></div>'}
+    $("q-body").innerHTML=h;
+    var last=st.q===Q.length-1;
+    $("q-next").textContent=last?"להציג מטפלים":(q.type==="multi"&&!a.topics.length?"לדלג":"המשך");
+    $("q-next").classList.toggle("is-wait",!answered(q));
+  }
+  $("q-body").addEventListener("click",function(e){
+    var b=e.target.closest("[data-k]"); if(!b) return;
+    var k=b.dataset.k,v=b.dataset.v,a=st.a;
+    if(k==="topics"){
+      if(v==="none"){a.topics=a.topics.indexOf("none")>-1?[]:["none"]}
+      else{a.topics=a.topics.filter(function(x){return x!=="none"});var i=a.topics.indexOf(v);if(i>-1)a.topics.splice(i,1);else a.topics.push(v)}
+    } else {a[k]=v; if(k==="who"&&v!=="self") a.age=null}
+    renderQuiz();
+  });
+  $("q-body").addEventListener("input",function(e){
+    if(e.target.id!=="q-p") return;
+    var raw=+e.target.value, v=Math.round(raw/10)*10; st.a.pmax=v; e.target.style.setProperty("--p",((raw-PMIN)/(PMAXV-PMIN)*100)+"%");
+    $("q-pv").textContent=priceLabel(v); e.target.setAttribute("aria-valuetext",priceLabel(v));
+  });
+  $("q-next").addEventListener("click",function(){
+    var q=Q[st.q];
+    if(!answered(q)){$("q-hint").textContent=q.type==="two"?"בחר/י גם איפה וגם מתי. אם אין העדפה, אפשר \"לא משנה\".":(q.type==="who"&&st.a.who==="self")?"בחר/י גם גיל, כדי שנציע מי שעובד עם הגיל הזה.":"בחר/י תשובה אחת כדי להמשיך.";return}
+    if(st.q<Q.length-1){st.q++;renderQuiz();$("q-in").scrollTop=0}
+    else{match();st.t=null;st.slot=null;st.notify=0;go(3)}
+  });
+  $("q-back").addEventListener("click",function(){if(st.q>0){st.q--;renderQuiz()}else go(1)});
+
+  /* אפשרויות */
+  function renderOptions(){
+    var L=st.list,best=L[0],h="";
+    if(!best.exact){$("o-title").textContent="אין כרגע התאמה מדויקת. אלה הכי קרובים."}
+    else if(L.length===1){$("o-title").textContent=g(best.t,"מצאנו מטפלת אחת עם מקום השבוע","מצאנו מטפל אחד עם מקום השבוע")}
+    else{$("o-title").textContent=L.length+" מטפלים עם מקום השבוע"}
+    $("o-sub").textContent=L.length>1?"לפי מה שסיפרת. הראשון הכי מתאים, ואפשר לבחור כל אחד.":"לפי מה שסיפרת.";
+    L.forEach(function(r,i){
+      var t=r.t,s=slotsOf(t)[0];
+      h+='<button type="button" class="ap-card'+(i===0?' best':'')+'" data-i="'+i+'">'
+        +(i===0&&L.length>1?'<span class="tag">'+(r.exact?"הכי מתאים לתשובות שלך":"הכי קרוב לתשובות שלך")+'</span>':'')
+        +'<span class="av">'+g(t,"פנויה השבוע","פנוי השבוע")+' · '+s.d+' '+s.t+'</span>'
+        +'<span class="who-row"><span class="ph" aria-hidden="true"><svg viewBox="0 0 40 40" width="100%" height="100%"><rect width="40" height="40" rx="10" fill="#e3eee9"/><circle cx="20" cy="15.5" r="7" fill="#b7cdc3"/><path d="M6.5 37c1.6-8.2 7.2-12.4 13.5-12.4S31.9 28.8 33.5 37z" fill="#b7cdc3"/></svg></span><span class="nm">'+esc(t.n)+' <span>· '+esc(t.role)+'</span></span></span>'
+        +(function(){var w=r.why.filter(function(x){return x!=="בהסדר עם הקופה"});return w.length?'<span class="why">'+esc(w.join(" · "))+'</span>':''})()
+        +(r.warn.length?'<span class="warn">שימו לב: '+esc(r.warn.join(" · "))+'</span>':'')
+        +'<span class="pr">'+(t.kupa?"170 ₪ בהסדר עם הקופה":t.price+" ₪ לפגישה, פרטי")+'</span>'
+        +'<span class="go">'+g(t,"להכיר את ","להכיר את ")+esc(first(t))+' ←</span>'
+        +'</button>';
+    });
+    $("o-cards").innerHTML=h;
+    renderNotify(!L.length||!L[0].exact);
+  }
+  $("o-cards").addEventListener("click",function(e){
+    var b=e.target.closest(".ap-card"); if(!b) return;
+    st.t=st.list[+b.dataset.i].t; st.slot=null; st.booked=false; go(4);
+  });
+  function renderNotify(show){
+    var b=$("o-notify"); b.hidden=!show; if(!show) return;
+    $("n-ask").hidden=st.notify!==0; $("n-form").hidden=st.notify!==1; $("n-done").hidden=st.notify!==2; $("n-hint").textContent="";
+  }
+  $("n-open").addEventListener("click",function(){st.notify=1;renderNotify(true)});
+  $("n-save").addEventListener("click",function(){
+    var tel=$("ap-n-tel").value.replace(/\D/g,""), nm=$("ap-n-name").value.trim().slice(0,20);
+    if(tel.length<9){renderNotify(true);$("n-hint").textContent="צריך מספר טלפון, כדי שנוכל לעדכן אותך.";return}
+    if(!$("ap-n-consent").checked){renderNotify(true);$("n-hint").textContent="צריך לסמן הסכמה לקבל את העדכון בוואטסאפ.";return}
+    st.notify=2; renderNotify(true);
+    $("n-done-t").textContent=(nm?nm+", ":"")+"נעדכן אותך בוואטסאפ ברגע שמטפל שמתאים לתשובות שלך יאשר מקום. הבקשה נשמרת לחודש, ואפשר לבטל בכל רגע בהודעה אחת. בינתיים אפשר לבחור מאחד הקרובים למטה.";
+  });
+  $("o-back").addEventListener("click",function(){st.q=Q.length-1;go(2)});
+  $("o-change").addEventListener("click",function(){st.q=0;go(2)});
+
+  /* היכרות */
+  function renderIntro(){
+    var t=st.t,r=score(t);
+    $("i-title").textContent=first(t)+" "+g(t,"יכולה","יכול")+" לפגוש "+obj()+" השבוע.";
+    $("i-name").textContent=t.n+" · "+t.role;
+    $("i-lic").textContent=t.lic;
+    $("i-quote").textContent="“"+t.q+"”";
+    $("i-why").innerHTML=r.why.length?"<b>למה "+esc(first(t))+":</b> "+esc(r.why.join(" · ")):"";
+    $("i-slots").innerHTML=slotsOf(t).map(function(s,i){var on=st.slot&&st.slot.d===s.d&&st.slot.t===s.t;return '<button type="button" class="ap-slot" data-i="'+i+'" aria-pressed="'+!!on+'"><span>'+s.d+'</span><b>'+s.t+'</b></button>'}).join("");
+    $("i-conf").textContent=first(t)+" "+g(t,"אישרה","אישר")+" את השעות האלה "+t.conf+".";
+    $("i-price").innerHTML=t.kupa?"<div>170 ₪ לפגישה, בהסדר עם הקופה</div><span>הפגישה הראשונה 70 ₪</span>":"<div>"+t.price+" ₪ לפגישה, פרטי</div><span>בלי התחייבות להמשך</span>";
+    $("i-hint").textContent="";
+    var c=$("i-cta");
+    if(st.slot){c.textContent="לקבוע את "+st.slot.d+" ב-"+st.slot.t;c.classList.remove("is-wait")}
+    else{c.textContent="לבחור שעה כדי להמשיך";c.classList.add("is-wait")}
+  }
+  $("i-slots").addEventListener("click",function(e){
+    var b=e.target.closest(".ap-slot"); if(!b) return;
+    st.slot=slotsOf(st.t)[+b.dataset.i]; renderIntro();
+  });
+  $("i-cta").addEventListener("click",function(){
+    if(!st.slot){$("i-hint").textContent="בחר/י אחת מהשעות למעלה.";return}
+    st.booked=false; go(5);
+  });
+
+  /* אישור */
+  function renderBook(){
+    var t=st.t; if(!st.slot) st.slot=slotsOf(t)[0];
+    var s=st.slot,w=whereOf(t),fn=first(t);
+    $("b-form").hidden=st.booked; $("b-done").hidden=!st.booked;
+    $("b-sum").textContent=s.d+", "+s.date+" · "+s.t+" · "+w;
+    var na=needAge(); $("b-age-l").hidden=!na; $("b-age-t").textContent=ageLabel(); $("b-hint").textContent="";
+    $("b-always").textContent=fn+" "+g(t,"תקבל","יקבל")+" תמיד: שם פרטי, טלפון, השעה, ו"+forText()+".";
+    $("b-share-l").textContent="לשתף את "+fn+" גם בתשובות שלי מהשאלון";
+    var ex=extras();
+    $("b-preview").innerHTML=ex.length?ex.map(function(x){return "<li>"+esc(x)+"</li>"}).join(""):"<li>לא סימנת בשאלון דברים נוספים לשתף.</li>";
+    $("b-preview").classList.toggle("on",st.share);
+    $("ap-share").checked=st.share;
+    if(st.booked){
+      $("d-title").textContent=st.name?"נקבע, "+st.name+".":"נקבע.";
+      $("d-line").textContent="יום "+s.d+", "+s.date+", בשעה "+s.t+". עם "+fn+", "+w+".";
+      $("d-msg").textContent=fn+" "+g(t,"תאשר","יאשר")+" סופית עד 20:00 היום, ואז "+g(t,"תשלח","ישלח")+" לך "+(w==="אונליין"?"קישור לפגישה.":"את הכתובת של הקליניקה.");
+      $("d-decline").textContent="אם "+fn+" "+g(t,"תגיד","יגיד")+" שזה לא מתאים, נציע לך מיד מישהו אחר עם מקום השבוע. לא צריך למלא שוב כלום.";
+      $("d-rem").textContent="ביום "+s.rem+" בערב נשלח לך תזכורת.";
+      $("d-side").textContent="לראות את הצד של "+fn;
+    }
+  }
+  function forText(){var a=st.a;return (a.who==="self"||!a.who)?"שהטיפול בשבילך, והגיל שלך":(a.who==="child"||a.who==="teen")?"שזה "+FOR[a.who].split(" ")[0]+", והגיל":"שזה "+FOR[a.who]}
+  function extras(){
+    var a=st.a,x=[],tp=(a.topics||[]).filter(function(k){return TOPIC[k]});
+    if(tp.length) x.push("מה מעסיק אותך: "+tp.map(function(k){return TOPIC[k]}).join(", "));
+    if(a.style) x.push("איזה טיפול ירגיש נכון: "+STYLEQ[a.style]);
+    return x;
+  }
+  $("ap-share").addEventListener("change",function(e){st.share=e.target.checked;$("b-preview").classList.toggle("on",st.share)});
+  function needAge(){var w=st.a.who;return !w||w==="self"||w==="child"||w==="teen"}
+  function ageLabel(){var w=st.a.who;return w==="child"?"גיל הילד/ה":w==="teen"?"גיל הנער/ה":"הגיל שלך"}
+  $("b-ok").addEventListener("click",function(){
+    if(needAge()){var v=parseInt($("ap-age").value,10); if(!(v>=1&&v<=120)){$("b-hint").textContent="צריך גיל, כדי שהמטפל יידע למי הפגישה.";$("ap-age").focus();return} st.ageN=v}
+    st.name=$("ap-name").value.trim().slice(0,20);st.booked=true;st.req=0;renderBook();$("b-done").scrollTop=0});
+
+  /* וואטסאפ */
+  function msg(cls,html,time){return '<div class="wa-msg '+cls+'">'+html+'<small>'+time+'</small></div>'}
+  function renderChat(){
+    var t=st.t||T[0],fn=first(t),sl=t.slots[slotKey(t)];
+    $("wa-sub").textContent="ההודעה השבועית ל"+fn;
+    var h='<div class="wa-day">יום שני</div>'+msg("wa-in","בוקר טוב "+esc(fn)+". יש לך מקום למטופלים חדשים השבוע? אפשר לענות במספר.","08:30");
+    if(st.wa===0) h+='<div class="wa-replies" data-k="n"><button type="button">0</button><button type="button">1</button><button type="button">2</button><button type="button">3</button></div>';
+    if(st.wa>=1){
+      h+=msg("wa-out",esc(st.n),"08:41");
+      if(st.n==="0") h+=msg("wa-in","תודה. נשאל שוב בשבוע הבא.","08:41");
+      else{
+        h+=msg("wa-in","תודה. באילו שעות?","08:41");
+        if(st.wa===1) h+='<div class="wa-replies" data-k="h"><button type="button">רביעי '+sl[0]+', חמישי '+sl[1]+'</button><button type="button">רק רביעי '+sl[0]+'</button><button type="button">אכתוב שעות אחרות</button></div>';
+      }
+    }
+    if(st.wa>=2){
+      h+=msg("wa-out",esc(st.h),"08:42");
+      h+=msg("wa-in","מעולה. אם מישהו יבחר שעה, נשלח לך שם פרטי, טלפון והשעה. שום דבר מעבר לזה.","08:42");
+      var who=st.name||"עמית",s=st.slot||{d:"רביעי",t:sl[0]},a=st.a;
+      var req='<span class="ln"><b>בקשה חדשה לפגישה ראשונה</b></span>'
+        +'<span class="ln">'+esc(who)+' · '+esc((a.who==="self"||!a.who)?"לעצמו/ה, בגיל "+(st.ageN||34):a.who==="child"?"לילד/ה, בגיל "+(st.ageN||9):a.who==="teen"?"לנער/ה, בגיל "+(st.ageN||15):FOR[a.who])+'</span>'
+        +'<span class="ln">יום '+esc(s.d)+' ב-'+esc(s.t)+' · '+esc(whereOf(t))+'</span>';
+      var ex=extras();
+      req+=(st.share&&ex.length)?ex.map(function(x){return '<span class="ln">'+esc(x)+'</span>'}).join(""):'<span class="ln">לא שיתף/ה פרטים נוספים מהשאלון.</span>';
+      req+='<span class="ln">לאשר עד 20:00?</span>';
+      h+=msg("wa-in",req,"12:40");
+      if(st.req===0) h+='<div class="wa-replies" data-k="r"><button type="button">לאשר</button><button type="button">לא מתאים לי</button></div>';
+      if(st.req===1){h+=msg("wa-out","לאשר","12:52")+msg("wa-in","מעולה. שלחנו ל"+esc(who)+" אישור. הטלפון: 050-0000000 (לדוגמה). נזכיר לשניכם יום לפני.","12:52")}
+      if(st.req===2){h+=msg("wa-out","לא מתאים לי","12:52")+msg("wa-in","תודה שעדכנת. נציע ל"+esc(who)+" מטפל אחר עם מקום השבוע. לא צריך להסביר.","12:52")}
+    }
+    if(st.req!==0||st.n==="0") h+='<button type="button" class="wa-again" id="wa-again">↺ לנסות שוב עם תשובות אחרות</button>';
+    var c=$("wa-chat"); c.innerHTML=h; c.scrollTop=c.scrollHeight;
+  }
+  $("wa-chat").addEventListener("click",function(e){
+    if(e.target.closest("#wa-again")){resetAll();return}
+    var b=e.target.closest(".wa-replies button"); if(!b) return;
+    var k=b.parentNode.dataset.k;
+    if(k==="n"){st.n=b.textContent;st.wa=1}else if(k==="h"){st.h=b.textContent;st.wa=2}else{st.req=b.textContent==="לאשר"?1:2}
+    renderChat();
+  });
+  function resetAll(){
+    st.q=0; st.a={who:null,age:null,topics:[],style:null,mode:null,time:null,pmax:350};
+    st.list=[]; st.t=null; st.slot=null; st.booked=false; st.name=""; st.share=false; st.req=0; st.wa=0; st.n=null; st.h=null;
+    st.ageN=null; st.notify=0; ["ap-n-name","ap-n-tel"].forEach(function(i){var x=$(i); if(x) x.value=""}); if($("ap-n-consent")) $("ap-n-consent").checked=false; var n1=$("ap-name"),n2=$("ap-tel"),n3=$("ap-age"); if(n1) n1.value=""; if(n2) n2.value=""; if(n3) n3.value="";
+    go(2);
+  }
+  $("wa-reset").addEventListener("click",resetAll);
+  $("d-restart").addEventListener("click",resetAll);
+})();
+</script>
+<script>
+(function(){
+  var start=document.querySelector('.ap-s[data-s="1"] .ap-cta'); if(start) start.click();
+  var standalone=(window.matchMedia&&window.matchMedia("(display-mode: standalone)").matches)||window.navigator.standalone;
+  var seen=false; try{seen=localStorage.getItem("a2hs-x")==="1"}catch(e){}
+  var tip=document.getElementById("a2hs");
+  if(tip&&!standalone&&!seen&&window.matchMedia("(max-width:599px)").matches) tip.hidden=false;
+  var x=document.getElementById("a2hs-x");
+  if(x) x.addEventListener("click",function(){tip.hidden=true;try{localStorage.setItem("a2hs-x","1")}catch(e){}});
+  if("serviceWorker" in navigator){try{navigator.serviceWorker.register("sw.js")}catch(e){}}
+})();
+</script>
+</body>
+</html>
