@@ -1,0 +1,928 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="יש מקום: מטפלים עם מקום השבוע. פיילוט בתל אביב.">
+<title>יש מקום</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap">
+<script>document.documentElement.lang="he";document.documentElement.dir="rtl";</script>
+<style>
+/* פריסה: רקע ירקרק רך וכרטיסים לבנים מעליו (עומק בגוון, בלי צללים); בראש, שתי עמודות במחשב — סיפור ושלבים מימין, טלפון דביק משמאל שמתחלף לפי השלב בגלילה; אחר כך עמודת קריאה אחת. זהות אחת עם האפליקציה: ירוק עמוק, כותרות בסריף עברי */
+:root{
+  --bg:#edf1ec;
+  --band:#e3e9e2;
+  --surface:#ffffff;
+  --surface-2:#dfe6df;
+  --line:#cfdad3;
+  --fg:#18201c;
+  --muted:#56615b;
+  --accent:#1f5b51;
+  --accent-ink:#1d554b;
+  --accent-soft:#d9e9e1;
+  --on-accent:#ffffff;
+  --display:"Frank Ruhl Libre",Georgia,"Times New Roman",serif;
+  --font:"Assistant","Segoe UI","Arial Hebrew",Arial,sans-serif;
+  --r:16px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#101412; --band:#151a18; --surface:#1c2220; --surface-2:#28302d; --line:#2e3935; --fg:#e8ece9; --muted:#9aa5a0;
+  --accent:#6fb8a5; --accent-ink:#8fd0bf; --accent-soft:#1f3832; --on-accent:#0f1513; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101412; --band:#151a18; --surface:#1c2220; --surface-2:#28302d; --line:#2e3935; --fg:#e8ece9; --muted:#9aa5a0;
+  --accent:#6fb8a5; --accent-ink:#8fd0bf; --accent-soft:#1f3832; --on-accent:#0f1513; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:18px;line-height:1.65;-webkit-text-size-adjust:100%}
+.page{direction:rtl}
+.band{padding-block:56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band.tint{background:var(--band)}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:22px;min-width:0}
+.wrap > .list,.wrap > .flow,.wrap > details,.wrap > .quote{max-width:820px}
+h1,h2,h3{margin:0;text-wrap:balance}
+h1,h2{font-family:var(--display);font-weight:500}
+h2{font-size:32px;line-height:1.2}
+h3{font-size:19px;line-height:1.4;font-weight:700}
+p{margin:0}
+.lead{font-size:19px;color:var(--muted);max-width:58ch}
+.src{font-size:13px;color:var(--muted);line-height:1.45}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+.k{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:15px;flex:none}
+
+/* ראש העמוד: סיפור, שלבים וטלפון */
+.top{padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top-grid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"hero" "phone" "steps";gap:36px}
+.hero-c{grid-area:hero;display:flex;flex-direction:column;gap:22px;min-width:0}
+.phone-col{grid-area:phone;display:flex;flex-direction:column;align-items:center;gap:10px;min-width:0}
+.steps-c{grid-area:steps;display:flex;flex-direction:column;gap:20px;min-width:0}
+.brand{font-family:var(--display);font-weight:700;font-size:22px;color:var(--accent-ink);display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.brand .tagline{font-family:var(--font);font-weight:600;font-size:15px;color:var(--muted)}
+.open{font-size:21px;line-height:1.6;max-width:32em;text-wrap:pretty}
+.story{border-inline-start:3px solid var(--line);padding-inline-start:18px;display:flex;flex-direction:column;gap:8px;color:var(--muted);font-size:18px;max-width:34em}
+.thesis{font-size:40px;line-height:1.15;color:var(--fg)}
+.thesis em{font-style:normal;color:var(--accent-ink)}
+.hero-c .sub{font-size:19px;color:var(--muted);max-width:34em}
+.phone-note{font-size:13px;color:var(--muted);text-align:center;max-width:300px}
+
+.flow-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.dm-step{width:100%;text-align:right;font:inherit;background:transparent;color:var(--fg);border:0;border-radius:var(--r);padding:16px 18px;display:grid;grid-template-columns:34px minmax(0,1fr);gap:14px;align-items:start;cursor:pointer}
+@media (prefers-reduced-motion:no-preference){.dm-step{transition:background-color .25s ease}}
+.dm-step .n{width:34px;height:34px;border-radius:50%;background:var(--surface-2);color:var(--fg);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:17px}
+.dm-step b{display:block;font-family:var(--display);font-weight:500;font-size:23px;line-height:1.3}
+.dm-step .d{display:block;font-size:16px;color:var(--muted);line-height:1.55;padding-top:2px}
+.dm-step:hover{background:color-mix(in srgb,var(--surface) 60%,transparent)}
+.dm-step[aria-pressed="true"]{background:var(--surface)}
+.dm-step[aria-pressed="true"] .n{background:var(--accent);color:var(--on-accent)}
+.dm-step:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:899px){.dm-step:not([aria-pressed="true"]) .d{display:none}}
+.note{font-size:16px;color:var(--muted);max-width:56ch}
+
+.guards{display:flex;flex-direction:column;gap:6px;padding-top:4px}
+.guards h3{padding-bottom:4px}
+.guard{display:grid;grid-template-columns:26px minmax(0,1fr);gap:12px;align-items:start;font-size:16px}
+.guard svg{margin-top:3px}
+
+@media (min-width:900px){
+  .top{padding-block:64px 88px}
+  .top-grid{grid-template-columns:minmax(0,1fr) 340px;grid-template-areas:"hero phone" "steps phone";column-gap:64px;row-gap:56px}
+  .thesis{font-size:54px}
+  .open{font-size:23px}
+  .flow-steps{gap:6px}
+}
+@media (min-width:900px) and (min-height:760px){
+  .phone-col{position:sticky;top:calc(env(safe-area-inset-top,0px) + 28px);align-self:start}
+}
+
+/* מספרים */
+.tiles{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.tile{background:var(--surface);border-radius:var(--r);padding:20px 22px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tile.wide{grid-column:1/-1}
+@media (min-width:620px){.tiles.three .tile.span2{grid-column:span 2}}
+.num{font-family:var(--display);font-size:48px;line-height:1.05;font-weight:700;font-variant-numeric:tabular-nums;color:var(--fg)}
+.num small{font-size:24px;font-weight:500;color:var(--muted)}
+.tile p{max-width:52ch}
+.no-num{font-family:var(--display);font-size:28px;line-height:1.2;font-weight:500}
+.quote{background:var(--bg);border-radius:12px;padding:14px 16px;font-size:16px;display:flex;flex-direction:column;gap:4px}
+.quote q{font-family:var(--display);font-size:19px;font-weight:500}
+.quote.accent{background:var(--accent-soft)}
+.track{height:12px;border-radius:6px;background:var(--accent-soft);display:flex;overflow:hidden}
+.fill{height:100%;background:var(--accent);border-radius:6px}
+.fill.range{background:repeating-linear-gradient(135deg,var(--accent) 0 3px,var(--accent-soft) 3px 6px);border-radius:6px 0 0 6px}
+.bars{display:flex;flex-direction:column;gap:14px}
+.bar{display:flex;flex-direction:column;gap:5px}
+.bar .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.bar .label{font-size:16px}
+.bar .val{font-weight:700;font-size:18px;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* מה קיים */
+.list{display:flex;flex-direction:column;gap:12px}
+.item{background:var(--surface);border-radius:var(--r);padding:18px 22px;display:flex;flex-direction:column;gap:6px}
+.item .who{font-size:15px;color:var(--accent-ink);font-weight:700}
+.item .big{font-weight:700}
+
+/* גדילה */
+.stages{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.stage{background:var(--surface);border-radius:var(--r);padding:16px 18px;display:flex;flex-direction:column;gap:4px}
+.stage .s{font-family:var(--display);font-weight:700;color:var(--accent-ink);font-size:18px}
+.stage b{font-weight:700}
+.vals{display:flex;flex-direction:column;gap:8px}
+.vals .row{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.vals .row span:last-child{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* הפיילוט */
+.flow{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.flow li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;align-items:start;background:var(--surface);border-radius:var(--r);padding:14px 16px}
+.flow b{font-weight:700}
+.measure{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.measure div{background:var(--surface);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.measure b{font-weight:700}
+.asks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.ask{background:var(--accent-soft);border-radius:var(--r);padding:18px 20px;display:flex;flex-direction:column;gap:6px}
+.ask .q2{font-family:var(--display);font-weight:500;font-size:22px;line-height:1.3}
+.ask p{color:var(--fg);font-size:16px}
+.sign{display:flex;flex-direction:column;gap:2px;padding-top:6px}
+.sign b{font-family:var(--display);font-size:24px;font-weight:500}
+.sign span{color:var(--muted)}
+details{background:var(--surface);border-radius:var(--r)}
+summary{cursor:pointer;padding:14px 18px;font-size:15px;color:var(--muted);font-weight:600;border-radius:var(--r);list-style-position:inside}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details ul{margin:0;padding:0 36px 16px 18px;display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--muted)}
+
+@media (min-width:620px){
+  .band{padding-block:80px}
+  h2{font-size:40px}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tiles.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .stages{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .measure{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .asks{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .num{font-size:56px}
+}
+
+/* האפליקציה בתוך הטלפון */
+.ap-phone{background:#1d2422;border-radius:40px;padding:9px;width:100%;max-width:340px;justify-self:center;box-shadow:0 0 0 1px var(--line)}
+.ap-screen{
+  --a-bg:#fbfbf9;--a-ink:#1b1d1c;--a-soft:#646a67;--a-line:#e3e5e1;--a-time:#1f5b51;--a-time-bg:#e3eee9;--a-on:#ffffff;--a-err:#8a3d12;
+  border-radius:32px;height:660px;overflow:hidden;background:var(--a-bg);color:var(--a-ink);
+  font-family:"Assistant","Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.55;display:flex;flex-direction:column;color-scheme:light}
+.ap-status{display:flex;justify-content:space-between;align-items:center;padding:13px 24px 2px;font-size:12px;font-weight:600;direction:ltr;flex:none;color:var(--a-ink)}
+.ap-status i{display:inline-block;width:22px;height:10px;border-radius:3px;border:1.5px solid currentColor;opacity:.6}
+.ap-s{flex:1;min-height:0;display:flex;flex-direction:column}
+.ap-s[hidden]{display:none}
+.ap-in{flex:1;min-height:0;display:flex;flex-direction:column;gap:14px;padding:14px 22px 18px;overflow-y:auto;scrollbar-width:none}
+.ap-in::-webkit-scrollbar{display:none}
+.ap-in[hidden]{display:none}
+@media (prefers-reduced-motion:no-preference){.ap-s:not([hidden]) .ap-in:not([hidden]),.ap-wa:not([hidden]) .wa-chat{animation:apin .26s ease-out}}
+@keyframes apin{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}
+.ap-voice{font-family:"Frank Ruhl Libre",Georgia,serif;font-weight:400;font-size:26px;line-height:1.3;margin:0;text-wrap:balance;color:var(--a-ink)}
+.ap-green{color:var(--a-time)}
+.ap-soft{color:var(--a-soft);margin:0}
+.ap-small{font-size:13px;color:var(--a-soft);margin:0}
+.ap-grow{flex:1}
+.ap-label{font-size:12px;color:var(--a-soft)}
+.ap-top{display:flex;justify-content:space-between;align-items:center}
+.ap-meta{font-size:13px;color:var(--a-soft)}
+.ap-back{font:inherit;font-size:14px;background:none;border:0;color:var(--a-soft);padding:4px 0;cursor:pointer}
+.ap-sos{font-size:12px;color:var(--a-soft);text-align:center}
+.ap-cta{font:inherit;font-weight:700;font-size:17px;background:var(--a-ink);color:var(--a-bg);border:0;border-radius:14px;padding:14px;cursor:pointer;width:100%}
+.ap-cta.is-wait{background:var(--a-line);color:var(--a-soft)}
+.ap-cta-soft{background:var(--a-time-bg);color:var(--a-time)}
+.ap-link{font:inherit;font-size:14px;background:none;border:0;color:var(--a-soft);text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:2px 0;align-self:center}
+.ap-hint{margin:0;font-size:14px;color:var(--a-err);min-height:0}
+.ap-hint:empty{display:none}
+.ap-fake{font-size:11px;color:var(--a-soft);text-align:center}
+.ap-screen button:focus-visible,.ap-screen input:focus-visible{outline:2px solid var(--a-time);outline-offset:2px}
+
+/* פוסט */
+.ap-post{display:flex;flex-direction:column;gap:12px}
+.ap-post-head{display:flex;gap:10px;align-items:center}
+.ap-post-head b{display:block;font-size:15px;line-height:1.2}
+.ap-post-head span{font-size:12px;color:var(--a-soft)}
+.ap-logo{flex:none;width:34px;height:34px;border-radius:50%;background:var(--a-time);color:var(--a-on);display:flex;align-items:center;justify-content:center;font-family:"Frank Ruhl Libre",Georgia,serif;font-size:15px;font-weight:700;letter-spacing:-.02em}
+.ap-post-head .ap-logo,.wa-head .ap-logo{color:var(--a-on);font-size:15px}
+.ap-post-art{background:var(--a-time-bg);border-radius:16px;aspect-ratio:1/1;max-width:100%;padding:24px 22px;display:flex;flex-direction:column;justify-content:center;gap:12px}
+.ap-post-art .ap-voice{font-size:25px}
+.ap-cap{margin:0;font-size:15px}
+
+/* שאלון */
+.ap-prog{display:flex;gap:6px}
+.ap-prog span{flex:1;height:4px;border-radius:2px;background:var(--a-line)}
+.ap-prog span.on{background:var(--a-time)}
+.ap-opts{display:flex;flex-direction:column}
+.ap-opt{font:inherit;font-size:18px;text-align:right;background:none;border:0;border-bottom:1px solid var(--a-line);color:var(--a-ink);padding:14px 2px;display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer}
+.ap-opt:first-child{border-top:1px solid var(--a-line)}
+.ap-opt .mk{width:20px;height:20px;border-radius:50%;border:1.5px solid #c9ccc7;flex:none;display:flex;align-items:center;justify-content:center}
+.ap-opt[aria-checked="true"]{color:var(--a-time);font-weight:600}
+.ap-opt[aria-checked="true"] .mk{border-color:var(--a-time);background:var(--a-time)}
+.ap-opt[aria-checked="true"] .mk::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--a-on)}
+
+/* היכרות */
+.ap-cred{display:flex;flex-direction:column;gap:3px}
+.ap-cred b{font-size:16px}
+.ap-cred span{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--a-time)}
+.ap-quote{margin:0;font-size:15px;line-height:1.6;color:var(--a-ink);padding-inline-start:12px;border-inline-start:2px solid var(--a-time-bg)}
+.ap-why{margin:0;font-size:14px;color:var(--a-soft)}
+.ap-why b{color:var(--a-ink);font-weight:600}
+.ap-time{background:var(--a-time-bg);border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.ap-time-lbl{font-size:14px;color:var(--a-time);font-weight:600}
+.ap-slots{display:flex;gap:8px}
+.ap-slot{font:inherit;flex:1;background:var(--a-bg);border:1.5px solid var(--a-time);color:var(--a-time);border-radius:12px;padding:8px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;line-height:1.25}
+.ap-slot b{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
+.ap-slot span{font-size:13px}
+.ap-slot[aria-pressed="true"]{background:var(--a-time);color:var(--a-on)}
+.ap-facts{display:flex;flex-direction:column;gap:2px;font-size:15px}
+.ap-facts span{color:var(--a-soft)}
+
+/* אישור */
+.ap-sum{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--a-time-bg);color:var(--a-time);border-radius:12px;padding:10px 14px;font-size:14px;font-weight:600}
+.ap-sum .ap-link{color:var(--a-time)}
+.ap-field{display:flex;flex-direction:column;gap:5px;font-size:14px;color:var(--a-soft)}
+.ap-field input{font:inherit;font-size:17px;color:var(--a-ink);background:#ffffff;border:1.5px solid var(--a-line);border-radius:12px;padding:11px 12px;width:100%}
+.ap-field input[dir="ltr"]{text-align:right}
+.ap-done-mark{padding-top:10px}
+.ap-next{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:6px;font-size:15px}
+
+/* וואטסאפ של המטפלת */
+.ap-wa{background:#efeae2}
+.wa-head{display:flex;align-items:center;gap:10px;background:#f0f2f5;padding:8px 14px 10px;flex:none}
+.wa-head b{display:block;font-size:15px;line-height:1.2;color:#111b21}
+.wa-head span{font-size:12px;color:#667781}
+.wa-back{font:inherit;font-size:18px;background:none;border:0;color:#54656f;cursor:pointer;padding:0 2px}
+.wa-chat{flex:1;min-height:0;overflow-y:auto;padding:12px 12px 6px;display:flex;flex-direction:column;gap:7px;scrollbar-width:none;font-size:15px;color:#111b21}
+.wa-chat::-webkit-scrollbar{display:none}
+.wa-day{align-self:center;background:#ffffff;color:#54656f;font-size:12px;border-radius:7px;padding:3px 10px}
+.wa-msg{max-width:84%;border-radius:10px;padding:7px 10px 5px;line-height:1.45}
+.wa-in{align-self:flex-start;background:#ffffff;border-start-start-radius:3px}
+.wa-out{align-self:flex-end;background:#d9fdd3;border-start-end-radius:3px}
+.wa-msg small{display:block;text-align:left;font-size:11px;color:#667781;margin-top:2px}
+.wa-replies{align-self:flex-start;display:flex;flex-wrap:wrap;gap:6px;max-width:92%}
+.wa-replies button{font:inherit;font-size:14px;background:#ffffff;color:#008069;border:0;border-radius:18px;padding:7px 14px;cursor:pointer;font-weight:600}
+.wa-replies button:focus-visible{outline:2px solid #008069;outline-offset:2px}
+.wa-foot{flex:none;background:#f0f2f5;font-size:12px;color:#54656f;padding:9px 14px 14px;text-align:center;display:flex;flex-direction:column;gap:2px;align-items:center}
+.wa-foot .ap-link{font-size:12px;color:#54656f}
+
+/* דמו, שלב 2: שאלון מורחב וכרטיסי מטפלים */
+.ap-voice.sm{font-size:23px}
+.ap-opt .ot{display:flex;flex-direction:column;gap:1px;text-align:right}
+.ap-opt small{font-size:13px;color:var(--a-soft);font-weight:400}
+.ap-opt.multi .mk{border-radius:6px}
+.ap-opt.multi[aria-checked="true"] .mk::after{border-radius:2px}
+.ap-group{display:flex;flex-direction:column;gap:8px}
+.ap-group + .ap-group{padding-top:6px}
+.ap-group > b{font-size:15px}
+.ap-pills{display:flex;flex-wrap:wrap;gap:8px}
+.ap-pill{font:inherit;font-size:15px;background:#ffffff;border:1.5px solid var(--a-line);color:var(--a-ink);border-radius:12px;padding:8px 12px;cursor:pointer}
+.ap-pill[aria-checked="true"]{border-color:var(--a-time);background:var(--a-time-bg);color:var(--a-time);font-weight:600}
+.ap-screen .ap-pill:focus-visible,.ap-screen .ap-card:focus-visible{outline:2px solid var(--a-time);outline-offset:2px}
+.ap-cards{display:flex;flex-direction:column;gap:10px}
+.ap-card{font:inherit;text-align:right;background:#ffffff;border:1.5px solid var(--a-line);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:3px;cursor:pointer;color:var(--a-ink);width:100%}
+.ap-card:hover{border-color:var(--a-time)}
+.ap-card.best{border-color:var(--a-time);padding:14px 16px;gap:4px}
+.ap-card .tag{align-self:flex-start;background:var(--a-time);color:var(--a-on);font-size:12px;font-weight:600;border-radius:6px;padding:2px 8px;margin-bottom:3px}
+.ap-card .av{color:var(--a-time);font-weight:700;font-size:15px}
+.ap-card .nm{font-size:16px;font-weight:600;line-height:1.35}
+.ap-card .nm span{font-weight:400;color:var(--a-soft);font-size:14px}
+.ap-card .why{font-size:13px;color:var(--a-ink)}
+.ap-card .warn{font-size:13px;color:var(--a-err)}
+.ap-card .pr{font-size:13px;color:var(--a-soft)}
+.ap-card .go{font-size:13px;color:var(--a-time);font-weight:600;padding-top:2px}
+.ap-card.best .nm{font-size:17px}
+.ap-share{display:flex;flex-direction:column;gap:8px}
+.ap-consent{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--a-ink);cursor:pointer;background:#ffffff;border:1.5px solid var(--a-line);border-radius:12px;padding:10px 12px}
+.ap-consent input{width:18px;height:18px;margin:2px 0 0;accent-color:#1f5b51;flex:none}
+.ap-preview{margin:0;padding:0 14px;list-style:none;display:flex;flex-direction:column;gap:2px;font-size:13px;color:var(--a-soft)}
+.ap-preview.on{color:var(--a-ink)}
+.ap-preview li::before{content:"· "}
+.wa-msg .ln{display:block}
+.ap-age{padding-top:12px}
+.ap-range{display:flex;flex-direction:column;gap:10px;padding-top:6px}
+.ap-range-v{font-family:"Frank Ruhl Libre",Georgia,serif;font-size:24px;color:var(--a-time);line-height:1.3}
+.ap-range input[type="range"]{width:100%;accent-color:#1f5b51;height:28px;margin:0;direction:rtl}
+.ap-range-ends{display:flex;justify-content:space-between;font-size:13px;color:var(--a-soft)}
+
+
+html,body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="page" dir="rtl" lang="he">
+
+<!-- ראש: סיפור, טלפון ושלבים -->
+<section class="top" aria-labelledby="h-thesis">
+  <div class="top-grid">
+    <div class="hero-c">
+      <div class="brand">יש מקום <span class="tagline">מטפלים עם מקום השבוע</span></div>
+      <p class="open">בישראל כשליש מהאנשים מדווחים על צורך בטיפול נפשי. כמחצית מהם לא פונים, ומי שפונה מחכה חודשים בקופה או נתקע בחיפוש.</p>
+      <div class="story">
+        <p>חבר שלי, מילואימניק, ידע הרבה זמן שמגיע לו טיפול ולא הלך. כשניסה לחפש לבד, הוא נתקע והתייאש מהר.</p>
+        <p>בסוף הוא הגיע לטיפול דרך חבר, שהמליץ לו על מטפלת שהייתה פנויה באותו שבוע.</p>
+      </div>
+      <h1 class="thesis" id="h-thesis">מה שדחף אותו היה <em>מישהו פנוי עכשיו.</em></h1>
+      <p class="sub">אני בונה דרך לחבר בין מי שמחפש טיפול נפשי בישראל לבין מטפל שיש לו מקום השבוע. בטלפון אפשר לנסות את זה.</p>
+    </div>
+
+    <div class="phone-col">
+      <div class="ap-phone" aria-label="דמו של האפליקציה">
+        <div class="ap-screen" id="ap-screen" aria-live="polite">
+          <div class="ap-status"><span>9:41</span><i></i></div>
+
+          <section class="ap-s" data-s="1">
+            <div class="ap-in">
+              <div class="ap-label">ככה זה נראה בפיד</div>
+              <article class="ap-post">
+                <div class="ap-post-head"><span class="ap-logo">יש</span><div><b>יש מקום</b><span>תל אביב ואונליין</span></div></div>
+                <div class="ap-post-art">
+                  <p class="ap-voice">בקופות מחכים בממוצע חצי שנה לטיפול נפשי.</p>
+                  <p class="ap-voice ap-green">יש מטפלים עם מקום השבוע.</p>
+                </div>
+                <p class="ap-cap">חבר שלנו מהמילואים ידע הרבה זמן שמגיע לו טיפול. מה שעזר בסוף היה מישהי פנויה באותו שבוע. כמה שאלות קצרות, ולא חייבים לספר למה.</p>
+                <button type="button" class="ap-cta" data-go="2">למצוא מקום השבוע</button>
+              </article>
+              <div class="ap-grow"></div>
+              <div class="ap-sos">צריך עזרה עכשיו? ער"ן <span class="ltr">1201</span> · נט"ל <span class="ltr">1-800-363-363</span></div>
+            </div>
+          </section>
+
+          <section class="ap-s" data-s="2" hidden>
+            <div class="ap-in" id="q-in">
+              <div class="ap-top"><button type="button" class="ap-back" id="q-back">→ חזרה</button><span class="ap-meta" id="q-count"></span></div>
+              <div class="ap-prog" id="q-prog"><span></span><span></span><span></span><span></span><span></span></div>
+              <h3 class="ap-voice" id="q-title"></h3>
+              <p class="ap-soft" id="q-sub"></p>
+              <div id="q-body"></div>
+              <p class="ap-hint" id="q-hint" aria-live="polite"></p>
+              <div class="ap-grow"></div>
+              <button type="button" class="ap-cta" id="q-next">המשך</button>
+              <div class="ap-sos">צריך עזרה עכשיו? ער"ן <span class="ltr">1201</span> · נט"ל <span class="ltr">1-800-363-363</span></div>
+            </div>
+          </section>
+
+          <section class="ap-s" data-s="3" hidden>
+            <div class="ap-in" id="o-in">
+              <div class="ap-top"><button type="button" class="ap-back" id="o-back">→ חזרה</button><span class="ap-meta">יום שני, 9 בנובמבר</span></div>
+              <h3 class="ap-voice sm" id="o-title"></h3>
+              <p class="ap-soft ap-small" id="o-sub"></p>
+              <div class="ap-cards" id="o-cards"></div>
+              <p class="ap-small">זו לא אבחנה. בפגישה הראשונה תחליטו יחד מה מתאים.</p>
+              <button type="button" class="ap-link" id="o-change">לשנות תשובות</button>
+              <div class="ap-fake">שמות בדויים, לדוגמה</div>
+            </div>
+          </section>
+
+          <section class="ap-s" data-s="4" hidden>
+            <div class="ap-in" id="i-in">
+              <div class="ap-top"><button type="button" class="ap-back" data-go="3">→ חזרה</button><span class="ap-meta">יום שני, 9 בנובמבר</span></div>
+              <h3 class="ap-voice" id="i-title"></h3>
+              <div class="ap-cred"><b id="i-name"></b><span><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="7" fill="#1f5b51"/><path d="M4 7.2l2 1.9 4-4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="i-lic"></span></span></div>
+              <blockquote class="ap-quote" id="i-quote"></blockquote>
+              <p class="ap-why" id="i-why"></p>
+              <div class="ap-time">
+                <span class="ap-time-lbl">בחר/י שעה השבוע</span>
+                <div class="ap-slots" id="i-slots"></div>
+                <span class="ap-small" id="i-conf"></span>
+              </div>
+              <div class="ap-facts" id="i-price"></div>
+              <p class="ap-hint" id="i-hint" aria-live="polite"></p>
+              <button type="button" class="ap-cta" id="i-cta">לבחור שעה כדי להמשיך</button>
+              <button type="button" class="ap-link" data-go="3">לחזור לאפשרויות האחרות</button>
+            </div>
+          </section>
+
+          <section class="ap-s" data-s="5" hidden>
+            <div class="ap-in" id="b-form">
+              <div class="ap-top"><button type="button" class="ap-back" data-go="4">→ חזרה</button><span class="ap-meta">כמעט סיימנו</span></div>
+              <h3 class="ap-voice">לאן לשלוח את האישור?</h3>
+              <div class="ap-sum"><span id="b-sum"></span><button type="button" class="ap-link" data-go="4">לשנות</button></div>
+              <label class="ap-field" for="ap-name">שם פרטי<input id="ap-name" type="text" autocomplete="off" placeholder="לדוגמה: עמית"></label>
+              <label class="ap-field" for="ap-tel">טלפון<input id="ap-tel" type="tel" inputmode="tel" autocomplete="off" placeholder="050-0000000" dir="ltr"></label>
+              <div class="ap-share">
+                <p class="ap-small" id="b-always"></p>
+                <label class="ap-consent" for="ap-share"><input type="checkbox" id="ap-share"><span id="b-share-l"></span></label>
+                <ul class="ap-preview" id="b-preview"></ul>
+                <p class="ap-small">בדמו לא נשמר ולא נשלח כלום.</p>
+              </div>
+              <div class="ap-grow"></div>
+              <button type="button" class="ap-cta" id="b-ok">לאשר את הפגישה</button>
+            </div>
+            <div class="ap-in" id="b-done" hidden>
+              <div class="ap-done-mark" aria-hidden="true"><svg width="44" height="44" viewBox="0 0 44 44"><circle cx="22" cy="22" r="22" fill="#e3eee9"/><path d="M13 22.5l6 5.8 12-12" stroke="#1f5b51" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <h3 class="ap-voice" id="d-title"></h3>
+              <p id="d-line"></p>
+              <ol class="ap-next">
+                <li id="d-msg"></li>
+                <li id="d-rem"></li>
+                <li>אחרי הפגישה נשאל אם זה מתאים לך. אם לא, נציע מישהו אחר.</li>
+              </ol>
+              <p class="ap-small" id="d-decline"></p>
+              <p class="ap-small">אפשר לבטל או לשנות עד 24 שעות לפני, בלי להסביר למה.</p>
+              <div class="ap-grow"></div>
+              <button type="button" class="ap-cta ap-cta-soft" data-go="6" id="d-side"></button>
+            </div>
+          </section>
+
+          <section class="ap-s ap-wa" data-s="6" hidden>
+            <div class="wa-head"><button type="button" class="wa-back" data-go="5" aria-label="חזרה">→</button><span class="ap-logo">יש</span><div><b>יש מקום</b><span id="wa-sub"></span></div></div>
+            <div class="wa-chat" id="wa-chat"></div>
+            <div class="wa-foot">את מי לקבל (גילאים, נושאים, זוגות ומשפחות) המטפל מגדיר פעם אחת בהצטרפות, ולכן מגיעות אליו רק התאמות כאלה. בפיילוט זה וואטסאפ אמיתי. <button type="button" class="ap-link" id="wa-reset">להתחיל מחדש</button></div>
+          </section>
+        </div>
+      </div>
+      <p class="phone-note">דמו לחיץ, עם שמות בדויים. בפיילוט אני עושה את אותם צעדים ביד, בוואטסאפ ובטבלה.</p>
+    </div>
+
+    <div class="steps-c">
+      <h2 id="h-how">איך זה עובד</h2>
+      <p class="lead">שישה צעדים, מהפוסט הראשון ועד הפגישה. הטלפון מתחלף לפי הצעד, ואפשר גם ללחוץ.</p>
+      <ol class="flow-steps" aria-label="שלבי הדמו">
+        <li><button type="button" class="dm-step" data-go="1" aria-pressed="true"><span class="n">1</span><span><b>הדחיפה</b><span class="d">פוסט ברשתות שלא שואל מה עובר עליך. הוא רק אומר שבקופות מחכים חצי שנה, ושיש מטפלים עם מקום השבוע.</span></span></button></li>
+        <li><button type="button" class="dm-step" data-go="2" aria-pressed="false"><span class="n">2</span><span><b>השאלון</b><span class="d">למי הטיפול וגיל, מה מעסיק אותך (רשות), איזה טיפול ירגיש נכון, איפה, מתי וכמה. בלי אבחנה ובלי הסיבה לפנייה.</span></span></button></li>
+        <li><button type="button" class="dm-step" data-go="3" aria-pressed="false"><span class="n">3</span><span><b>עד שלושה מטפלים</b><span class="d">רק מי שאישר מקום השבוע ומתאים למי שהוא מקבל. הראשון הכי מתאים, ולכל אחד כתוב למה.</span></span></button></li>
+        <li><button type="button" class="dm-step" data-go="4" aria-pressed="false"><span class="n">4</span><span><b>ההיכרות</b><span class="d">מי זה, הרישום המקצועי, משפט במילים שלו, ושעות פנויות השבוע. אף שעה לא מסומנת מראש.</span></span></button></li>
+        <li><button type="button" class="dm-step" data-go="5" aria-pressed="false"><span class="n">5</span><span><b>אישור</b><span class="d">שם פרטי וטלפון. מה עוד עובר למטפל, רק אם מסמנים. ומה קורה מכאן ועד הפגישה.</span></span></button></li>
+        <li><button type="button" class="dm-step" data-go="6" aria-pressed="false"><span class="n">6</span><span><b>הצד של המטפל</b><span class="d">הודעה שבועית על מקום פנוי, ובקשה לכל פגישה חדשה. אפשר לאשר או לסרב, בלי להסביר.</span></span></button></li>
+      </ol>
+      <p class="note">בכל הקופות יש גם מסלול של פסיכולוג עצמאי בהסדר: 70 ₪ לפגישה הראשונה וכ-170 ₪ לכל פגישה אחריה, והקופה משלימה את השאר. הרבה אנשים לא יודעים שכך אפשר להגיע לפסיכולוג פרטי בלי לחכות חצי שנה.</p>
+      <div class="guards">
+        <h3>על מה שומרים</h3>
+        <div class="guard"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" stroke="var(--accent)" stroke-width="2" fill="none"/><path d="M10 6v5M10 13.5v.5" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg><p>מסלול חירום בכל שלב: ער"ן <span class="ltr">1201</span> · נט"ל <span class="ltr">1-800-363-363</span></p></div>
+        <div class="guard"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect x="4" y="8.5" width="12" height="9" rx="2.5" stroke="var(--accent)" stroke-width="2" fill="none"/><path d="M7 8.5V6.5a3 3 0 0 1 6 0v2" stroke="var(--accent)" stroke-width="2" fill="none"/></svg><p>מינימום מידע: שם פרטי וטלפון. השאלה על מה מעסיק אותך היא רשות, והתשובה לא עוברת למטפל בלי אישור.</p></div>
+        <div class="guard"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" stroke="var(--accent)" stroke-width="2" fill="none"/><path d="M4.5 15.5l11-11" stroke="var(--accent)" stroke-width="2"/></svg><p>בלי ביקורות ודירוגים על מטפלים. קוד האתיקה אוסר על פסיכולוגים לבקש המלצות, ואנחנו בונים לפי הכללים.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- הבעיה במספרים -->
+<section class="band tint" aria-labelledby="h-nums">
+  <div class="wrap">
+    <h2 id="h-nums">רוב מי שצריך טיפול לא מגיע אליו</h2>
+    <p class="lead">יש אנשים שמחפשים, ויש מטפלים עם מקום. מה שחסר הוא החיבור ביניהם.</p>
+    <div class="tiles three">
+      <div class="tile">
+        <div class="num">כמחצית</div>
+        <p>ממי שמדווחים על צורך בטיפול נפשי לא פנו.</p>
+        <div class="src">ברומטר כללית, ג'וינט וברוקדייל, 2026</div>
+      </div>
+      <div class="tile">
+        <div class="num">6.5 <small>חודשים</small></div>
+        <p>המתנה ממוצעת בקופות. 38% לא פנו בגלל ההמתנה, ו-23% כי לא ידעו שאפשר.</p>
+        <div class="src">מבקר המדינה, פברואר 2025</div>
+      </div>
+      <div class="tile">
+        <div class="num">0.6%</div>
+        <p>קיבלו טיפול בקופות ובמרכזי החוסן בחצי השנה שאחרי 7 באוקטובר, מול 38% שדיווחו על תסמינים.</p>
+        <div class="src">מבקר המדינה. דיווח בשאלון אינו אבחנה.</div>
+      </div>
+      <div class="tile wide">
+        <h3>ומצד המטפלים, יש מקום</h3>
+        <p class="src" style="font-size:15px">אחוז המטפלים שמסמנים "פנוי למטופלים חדשים" באתר פסיכולוגיה עברית</p>
+        <div class="bars">
+          <div class="bar">
+            <div class="row"><span class="label">פסיכולוגים</span><span class="val">33%</span></div>
+            <div class="track" role="img" aria-label="33%"><div class="fill" style="width:33%"></div></div>
+          </div>
+          <div class="bar">
+            <div class="row"><span class="label">עובדים סוציאליים ומטפלי אמנויות</span><span class="val">61%</span></div>
+            <div class="track" role="img" aria-label="61%"><div class="fill" style="width:61%"></div></div>
+          </div>
+          <div class="bar">
+            <div class="row"><span class="label">מטפלים אונליין</span><span class="val"><span class="ltr">66–81%</span></span></div>
+            <div class="track" role="img" aria-label="בין 66% ל-81%"><div class="fill" style="width:66%;border-radius:0 6px 6px 0"></div><div class="fill range" style="width:15%"></div></div>
+          </div>
+          <div class="bar">
+            <div class="row"><span class="label">ספקים של משרד הביטחון</span><span class="val">72%</span></div>
+            <div class="track" role="img" aria-label="72%"><div class="fill" style="width:72%"></div></div>
+          </div>
+        </div>
+        <p>משרד הביטחון מדווח על מחסור במטפלים. באותו זמן, 72% מהספקים שלו מסמנים שהם פנויים.</p>
+        <div class="src">ספירת פרופילים, 30.10.2026. "פנוי" הוא סימון של המטפל עצמו.</div>
+      </div>
+      <div class="tile">
+        <div class="no-num">אף גוף לא מודד</div>
+        <p>כמה זמן עובר מהרגע שאדם מחליט לפנות ועד הפגישה הראשונה. אין מדד כזה בדוח מור יוסף, ולא מצאנו אותו באף מקור אחר.</p>
+      </div>
+      <div class="tile span2">
+        <div class="no-num">אצל פצועי צה"ל</div>
+        <p>47% מבעלי פגיעה נפשית לא קיבלו מידע על הזכאות. מתוך 461 מיליון ₪ לטיפול בפוסט־טראומה, נוצלו 14%.</p>
+        <div class="quote"><q>זה כסף שנשתה. הנכים לא יראו אותו יותר.</q><span class="src">יו"ר ארגון נכי צה"ל, בכנסת, 9.1.2025</span></div>
+        <div class="src">מבקר המדינה, "נפש אחת", ינואר 2024</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- מה קיים -->
+<section class="band" aria-labelledby="h-exist">
+  <div class="wrap">
+    <h2 id="h-exist">מה קיים היום, ואיפה זה נעצר</h2>
+    <p class="lead">יש כלים טובים בשוק. כל אחד מהם פותר חלק מהדרך.</p>
+    <div class="list">
+      <div class="item">
+        <div class="who">אתרי המדריך: בטיפולנט, על הספה, פסיכולוגיה עברית ועוד</div>
+        <div class="num"><small>רק </small>1 <small>מתוך 9</small></div>
+        <p>מאגרים שבדקנו מסמן מי פנוי, וגם שם זה סימון של המטפל עצמו, בלי תאריך עדכון. באף אחד אי אפשר לקבוע פגישה במקום. ב-19 מתוך 22 פרופילים שבדקנו מופיע רק טלפון, ומטפל לא יכול לענות באמצע פגישה.</p>
+        <div class="src">בדיקה של 9 מאגרים, נובמבר 2026: בטיפולנט, על הספה, פסיכולוגיה עברית, SomeBuddy, Mentalytics, RateTherapy, איט"ה, Infomed, GetHelp</div>
+      </div>
+      <div class="item">
+        <div class="who">שאלוני התאמה: SomeBuddy, Mentalytics</div>
+        <p>עוזרים לבחור מטפל מתאים, אבל מחכים שהאדם יגיע אליהם ולא מראים מי פנוי עכשיו. גם ברשתות, אף מאגר לא מדבר אל מי שעוד מהסס אם לפנות.</p>
+      </div>
+      <div class="item">
+        <div class="who">ובארה"ב, שם רשימות כאלה קיימות שנים</div>
+        <p>בבדיקות "לקוח סמוי" מול רשימות המטפלים של חברות הביטוח, הצליחו לקבוע תור רק ב-<span class="big">14–18%</span> מהניסיונות. מחקר מ-2026 מצא שרק <span class="big">23.6%</span> מהשיחות לרשימות כאלה הסתיימו בפגישה.</p>
+        <div class="src">ועדת הכספים של הסנאט האמריקאי, 2023–2024 · <span class="ltr">JAMA Health Forum</span>, 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- איך זה גדל -->
+<section class="band tint" aria-labelledby="h-grow">
+  <div class="wrap">
+    <h2 id="h-grow">איך זה גדל</h2>
+    <p class="lead">מתחילים בציבור הרחב. מה שנבנה שם משרת אחר כך גם את מי שמשלם על טיפול.</p>
+    <ol class="stages">
+      <li class="stage"><span class="s">א</span><b>הציבור הרחב</b><span>כל מי שמחפש טיפול.</span></li>
+      <li class="stage"><span class="s">ב</span><b>גופים שמשלמים על טיפול</b><span>אגף השיקום, ביטוח לאומי, ביטוחים ומעסיקים. הם צריכים להעביר הרבה אנשים למטפל פנוי ולדעת שזה קרה.</span></li>
+      <li class="stage"><span class="s">ג</span><b>כלים למטפלים</b><span>מקום אחד לנהל זמינות וניירת מול כמה משלמים.</span></li>
+    </ol>
+    <div class="tiles">
+      <div class="tile">
+        <div class="num">85,000</div>
+        <p>פצועים באגף השיקום בתחילת 2026. הצפי ל-2028 הוא 100,000, כמחציתם עם פגיעה נפשית.</p>
+        <div class="src">ועדת מור יוסף, יוני 2026</div>
+      </div>
+      <div class="tile">
+        <p>בחו"ל יש חברות שעושות בדיוק את זה: מחברות מטופל למטפל פנוי ועובדות מול מי שמשלם.</p>
+        <div class="vals">
+          <div class="row"><span class="ltr">Headway (2024)</span><span>2.3 מיליארד $</span></div>
+          <div class="row"><span class="ltr">Grow Therapy (2026)</span><span>3 מיליארד $</span></div>
+          <div class="row"><span class="ltr">Spring Health (2024)</span><span>3.3 מיליארד $</span></div>
+        </div>
+        <p>אצל <span class="ltr">Headway</span> עוברים 5.9 ימים בממוצע עד הפגישה הראשונה.</p>
+        <div class="src">שווי החברות בשנה שבסוגריים. נתון הימים הוא של החברה עצמה.</div>
+      </div>
+    </div>
+    <div class="quote accent">
+      <span>ועדת מור יוסף המליצה על פלטפורמה שבה</span>
+      <q>הספקים… יזינו זמינות, מיקום ושעות קבלה</q>
+      <span>והממשלה אישרה את המלצות הוועדה ב-16 ביולי 2026.</span>
+      <span class="src">דוח ועדת מור יוסף, עמ' 134 · ynet, וואלה ו-mako, יולי 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- הפיילוט -->
+<section class="band" aria-labelledby="h-pilot">
+  <div class="wrap">
+    <h2 id="h-pilot">מה אני עושה עכשיו: פיילוט קטן בתל אביב</h2>
+    <p class="lead">לפני שבונים אפליקציה, בודקים ביד אם זה עובד. עד אמצע דצמבר, בלי כסף ובלי פרסום: וואטסאפ, טבלה ואני.</p>
+    <ol class="flow">
+      <li><span class="k">1</span><div><b>10 מטפלים בתל אביב ואונליין</b> עונים פעם בשבוע להודעת וואטסאפ אחת: "יש לך מקום חדש השבוע?"</div></li>
+      <li><span class="k">2</span><div><b>מי שמחפש טיפול</b> ממלא טופס קצר, ומקבל ממני עד שלושה מטפלים שאישרו מקום השבוע.</div></li>
+      <li><span class="k">3</span><div><b>אחרי שבוע</b> אני בודק אם הפגישה הראשונה קרתה.</div></li>
+    </ol>
+    <h3>מה אני מודד</h3>
+    <div class="measure">
+      <div><b>כמה מטפלים עונים</b><span class="src">להודעה השבועית, שבוע אחרי שבוע</span></div>
+      <div><b>כמה פניות הופכות לפגישה</b><span class="src">בארה"ב: 23.6%</span></div>
+      <div><b>כמה ימים עד הפגישה הראשונה</b><span class="src">אף גוף בישראל לא מודד את זה</span></div>
+    </div>
+    <p class="note">אני סטודנט לפסיכולוגיה, לא מטפל. הפיילוט הוא היכרות בין אנשים, לא הפניה קלינית: ההחלטה אם להתחיל טיפול ואיך היא של המטופל והמטפל. בכל שלב יש מסלול חירום, ושומרים מינימום מידע.</p>
+
+    <h3 style="padding-top:12px">איך אפשר לעזור</h3>
+    <ul class="asks">
+      <li class="ask">
+        <span class="q2">את/ה מטפל/ת?</span>
+        <p>אני מחפש 10 מטפלים שיענו להודעה אחת בשבוע. בתמורה: אנשים שמחפשים טיפול עכשיו, חינם בפיילוט. ואשמח גם ל-15 דקות על איך מגיעים אליך מטופלים חדשים.</p>
+        <p><a href="therapists.html" style="color:var(--accent-ink);font-weight:600">מה זה אומר בשבילך, בעמוד למטפלים ←</a></p>
+      </li>
+      <li class="ask">
+        <span class="q2">מחפש/ת טיפול, או חיפשת פעם ונתקעת?</span>
+        <p>ספר/י לי איפה. ואם את/ה בתל אביב ורוצה, אחבר אותך למטפל שיש לו מקום השבוע.</p>
+      </li>
+      <li class="ask">
+        <span class="q2">מכיר/ה מישהו בעמותה, בקרן, בקופה או בביטוח?</span>
+        <p>פגישה עם מי שעוסק בזה שווה לי הרבה.</p>
+      </li>
+    </ul>
+    <div class="sign">
+      <b>עידן</b>
+      <span>סטודנט לפסיכולוגיה, אוניברסיטת תל אביב</span>
+    </div>
+    <details>
+      <summary>מקורות</summary>
+      <ul>
+        <li>ברומטר כללית, ג'וינט וברוקדייל, 2026</li>
+        <li>מבקר המדינה, טיפול נפשי בקופות החולים ואחרי 7.10, פברואר 2025</li>
+        <li>מבקר המדינה, "נפש אחת", ינואר 2024</li>
+        <li>פרוטוקול הוועדה המשותפת לתקציב הביטחון, 9.1.2025</li>
+        <li>דוח ועדת מור יוסף, יוני 2026; החלטת הממשלה, 16.7.2026</li>
+        <li>ספירת פרופילים באתר פסיכולוגיה עברית, 30.10.2026</li>
+        <li>בדיקה של 9 מאגרים ישראליים, נובמבר 2026</li>
+        <li>ועדת הכספים של הסנאט האמריקאי, 2023–2024</li>
+        <li>JAMA Health Forum, 2026</li>
+        <li>אתרי כללית, מכבי ומאוחדת: מסלול פסיכולוג עצמאי בהסדר, 2026</li>
+      </ul>
+    </details>
+  </div>
+</section>
+
+</div>
+<script>
+(function(){
+  var root=document.getElementById("ap-screen"); if(!root) return;
+  function $(id){return document.getElementById(id)}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+  var Q=[
+    {k:"who",type:"who",t:"בשביל מי הטיפול?",sub:"כדי להציע רק מי שעובד עם הגיל הזה, או עם זוגות ומשפחות.",
+     o:[["self","לי"],["child","לילד או לילדה, עד גיל 12"],["teen","לנער או לנערה, 13 עד 18"],["couple","לנו, כזוג"],["family","למשפחה"]],
+     ages:[["young","18 עד 25"],["adult","26 עד 64"],["older","65 ומעלה"]]},
+    {k:"topics",type:"multi",t:"מה מעסיק אותך בתקופה הזו?",sub:"רשות, ואפשר לבחור כמה. זה עוזר להציע מישהו שעובד עם הנושא. זו לא אבחנה, וזה לא עובר למטפל בלי אישור שלך.",
+     o:[["none","מעדיף/ה לא לומר"],["anxiety","לחץ וחרדה"],["mood","מצב רוח"],["relationship","זוגיות ומשפחה"],["trauma","אחרי אירוע קשה"],["work","עבודה ולימודים"],["other","משהו אחר"]]},
+    {k:"style",type:"single",t:"איזה טיפול ירגיש לך נכון?",sub:"זו רק נקודת התחלה. בפגישה הראשונה תחליטו יחד אם זה מתאים.",
+     o:[["deep","לדבר לעומק ולהבין מאיפה זה מגיע","גישה דינמית"],["practical","כלים מעשיים ותרגילים בין הפגישות","CBT, טיפול קוגניטיבי-התנהגותי"],["body","גם דרך הגוף, אמנות או תנועה","טיפול באמנויות וגישות הוליסטיות"],["unsure","לא יודע/ת, תעזרו לי לבחור"]]},
+    {k:"where",type:"two",t:"איפה ומתי נוח לך?",sub:"נציע רק מי שיש לו מקום השבוע.",
+     g:[{k:"mode",l:"איפה",o:[["online","אונליין"],["near","בקליניקה, קרוב לבית"],["any","לא משנה"]]},
+        {k:"time",l:"מתי",o:[["morning","בבוקר"],["noon","אחר הצהריים"],["evening","בערב"],["any","לא משנה"]]}]},
+    {k:"pmax",type:"range",t:"כמה נוח לך לשלם לפגישה?",sub:"הזיזו עד המחיר המקסימלי. יש מטפלים בהסדר עם הקופה, ואצלם פגישה עולה 170 ₪."}
+  ];
+  var PMIN=170,PMAXV=600;
+  function priceLabel(v){return v<=PMIN?"רק בהסדר עם הקופה, 170 ₪":v>=PMAXV?"כל מחיר":"עד "+v+" ₪ לפגישה"}
+  var FOR={self:"לעצמו/ה",child:"לילד/ה עד 12",teen:"לנער/ה בגיל 13 עד 18",couple:"טיפול זוגי",family:"טיפול משפחתי"};
+  var AGE={young:"בגיל 18 עד 25",adult:"בגיל 26 עד 64",older:"בגיל 65 ומעלה"};
+  var STYLEQ={deep:"לדבר לעומק",practical:"כלים מעשיים",body:"דרך הגוף, אמנות או תנועה",unsure:"עוד לא יודע/ת"};
+  var T=[
+    {n:"דנה לוי",f:1,role:"פסיכולוגית קלינית",lic:"הרישיון נבדק בפנקס הפסיכולוגים",who:["young","adult"],topics:["anxiety","mood","work"],style:"deep",modes:["online","near"],kupa:1,price:170,slots:{evening:["19:00","20:30"],morning:["09:00","10:30"]},conf:"הבוקר",
+     q:"אני עובדת הרבה עם אנשים שמתחילים טיפול בפעם הראשונה. בפגישה הראשונה פשוט נכיר, ואת/ה מחליט/ה אם להמשיך."},
+    {n:"עמית ברק",f:0,role:"עובד סוציאלי קליני",lic:"הרישום נבדק בפנקס העובדים הסוציאליים",who:["young","adult","teen"],topics:["anxiety","work","trauma"],style:"practical",modes:["online"],kupa:0,price:300,slots:{evening:["18:00","20:00"],noon:["15:00","16:30"]},conf:"אתמול",
+     q:"אני עובד בעיקר עם כלים מעשיים. כבר מהפגישה הראשונה יוצאים עם משהו קטן לנסות."},
+    {n:"מיכל אדלר",f:1,role:"עובדת סוציאלית קלינית",lic:"הרישום נבדק בפנקס העובדים הסוציאליים",who:["adult","older"],topics:["trauma","mood","relationship"],style:"deep",modes:["online"],kupa:1,price:170,slots:{morning:["08:30","11:00"],evening:["20:00","21:00"]},conf:"הבוקר",
+     q:"הרבה אנשים מגיעים אליי אחרי תקופה קשה. אנחנו הולכים בקצב שלך, בלי לחץ לספר הכול."},
+    {n:"רות כהן",f:1,role:"פסיכולוגית קלינית, מבוגרים וגיל השלישי",lic:"הרישיון נבדק בפנקס הפסיכולוגים",who:["adult","older"],topics:["mood","relationship","anxiety","trauma"],style:"deep",modes:["near","online"],kupa:1,price:170,slots:{morning:["09:30","11:00"],noon:["14:00","15:30"]},conf:"הבוקר",
+     q:"הרבה אנשים מתחילים טיפול לראשונה אחרי גיל 65, וזה בסדר גמור. אפשר להיפגש בקליניקה, ואם קשה להגיע, גם בשיחת וידאו."},
+    {n:"נועה שגיא",f:1,role:"מטפלת באמנויות",lic:"ההסמכה נבדקה",who:["child","teen","family"],topics:["mood","trauma","relationship","anxiety"],style:"body",modes:["near"],kupa:0,price:280,slots:{noon:["15:30","17:00"],morning:["10:00","11:30"]},conf:"ביום ראשון",
+     q:"עם ילדים ונוער אנחנו מדברים גם דרך ציור ומשחק. ככה קל יותר להתחיל."},
+    {n:"אורי מזרחי",f:0,role:"פסיכולוג קליני, ילדים ונוער",lic:"הרישיון נבדק בפנקס הפסיכולוגים",who:["child","teen"],topics:["anxiety","mood","work"],style:"practical",modes:["near","online"],kupa:1,price:170,slots:{noon:["16:00","17:30"],evening:["18:30","19:30"]},conf:"הבוקר",
+     q:"בפגישה הראשונה אני נפגש קודם עם ההורים, ואחר כך עם הילד. ככה כולם יודעים מה הולך לקרות."},
+    {n:"יעל רוזן",f:1,role:"פסיכולוגית קלינית, זוגות ומשפחות",lic:"הרישיון נבדק בפנקס הפסיכולוגים",who:["couple","family"],topics:["relationship","mood","anxiety"],style:"deep",modes:["near","online"],kupa:0,price:380,slots:{evening:["19:30","21:00"],morning:["09:30","11:00"]},conf:"אתמול",
+     q:"בטיפול זוגי אני לא שופטת אף אחד מכם. התפקיד שלי הוא לעזור לכם לשמוע אחד את השני."}
+  ];
+  var DAYS=[{d:"רביעי",date:"11 בנובמבר",rem:"שלישי"},{d:"חמישי",date:"12 בנובמבר",rem:"רביעי"}];
+  var TW={morning:"בבוקר",noon:"אחר הצהריים",evening:"בערב"};
+  var STYLE={deep:"שיחה לעומק",practical:"כלים מעשיים",body:"גם דרך אמנות ותנועה"};
+  var TOPIC={anxiety:"לחץ וחרדה",mood:"מצב רוח",relationship:"זוגיות ומשפחה",trauma:"אחרי אירוע קשה",work:"עבודה ולימודים"};
+  var WHO={child:"עם ילדים",teen:"עם נוער",couple:"עם זוגות",family:"עם משפחות",young:"עם צעירים",older:"עם אנשים בגיל 65 ומעלה"};
+
+  var st={s:1,q:0,a:{who:null,age:null,topics:[],style:null,mode:null,time:null,pmax:350},list:[],t:null,slot:null,booked:false,name:"",share:false,req:0,wa:0,n:null,h:null};
+  function whoKey(){var a=st.a;return a.who==="self"?(a.age||"adult"):(a.who||"adult")}
+  function g(t,f,m){return t.f?f:m}
+  function first(t){return t.n.split(" ")[0]}
+  function slotKey(t){var k=st.a.time;return (k&&k!=="any"&&t.slots[k])?k:Object.keys(t.slots)[0]}
+  function slotsOf(t){var s=t.slots[slotKey(t)];return DAYS.map(function(d,i){return{d:d.d,date:d.date,rem:d.rem,t:s[i]}})}
+  function whereOf(t){var m=st.a.mode;if(m==="near"&&t.modes.indexOf("near")>-1)return"בקליניקה בתל אביב";if(m==="online"&&t.modes.indexOf("online")>-1)return"אונליין";return t.modes[0]==="online"?"אונליין":"בקליניקה בתל אביב"}
+  function obj(){return(st.a.who==="couple"||st.a.who==="family")?"אתכם":"אותך"}
+
+  function score(t){
+    var a=st.a,sc=0,why=[],warn=[],exact=true;
+    if(WHO[whoKey()]) why.push(g(t,"עובדת ","עובד ")+WHO[whoKey()]);
+    if(a.style&&a.style!=="unsure"){ if(t.style===a.style){sc+=3;why.push(STYLE[t.style])} else {exact=false;warn.push("הגישה שלה: "+STYLE[t.style]); if(!t.f) warn[warn.length-1]="הגישה שלו: "+STYLE[t.style]} }
+    var tp=(a.topics||[]).filter(function(x){return TOPIC[x]&&t.topics.indexOf(x)>-1});
+    if(tp.length){sc+=2*tp.length;why.push(g(t,"עובדת","עובד")+" עם "+TOPIC[tp[0]])}
+    if(a.mode&&a.mode!=="any"){ if(t.modes.indexOf(a.mode)>-1){sc+=2;why.push(a.mode==="online"?"אונליין":"קליניקה בתל אביב")} else {exact=false;warn.push(a.mode==="online"?"רק בקליניקה":"רק אונליין")} }
+    if(a.time&&a.time!=="any"){ if(t.slots[a.time]){sc+=2;why.push(g(t,"פנויה ","פנוי ")+TW[a.time])} else {exact=false;warn.push(g(t,"פנויה השבוע רק ","פנוי השבוע רק ")+TW[Object.keys(t.slots)[0]])} }
+    var pm=a.pmax;
+    if(t.kupa){ if(pm<PMAXV){sc+=2} why.push("בהסדר עם הקופה") }
+    else if(pm<PMAXV){ if(pm>PMIN&&t.price<=pm){sc+=1} else {exact=false;warn.push("פרטי, "+t.price+" ₪ לפגישה")} }
+    return{t:t,sc:sc,why:why,warn:warn,exact:exact};
+  }
+  function match(){
+    var who=whoKey();
+    st.list=T.filter(function(t){return t.who.indexOf(who)>-1}).map(score).sort(function(x,y){return(y.exact-x.exact)||(y.sc-x.sc)}).slice(0,3);
+  }
+
+  function go(n){
+    st.s=n;
+    root.querySelectorAll(".ap-s").forEach(function(s){s.hidden=(+s.dataset.s!==n)});
+    document.querySelectorAll(".dm-step").forEach(function(b){b.setAttribute("aria-pressed",+b.dataset.go===n?"true":"false")});
+    if(n>=3&&!st.list.length) match();
+    if(n>=4&&!st.t) st.t=st.list[0].t;
+    if(n===2) renderQuiz(); if(n===3) renderOptions(); if(n===4) renderIntro(); if(n===5) renderBook(); if(n===6) renderChat();
+    root.querySelectorAll(".ap-in,.wa-chat").forEach(function(x){x.scrollTop=0});
+    if(n===6){var c=$("wa-chat");c.scrollTop=c.scrollHeight}
+  }
+  document.addEventListener("click",function(e){
+    var b=e.target.closest("[data-go]"); if(!b) return;
+    var n=+b.dataset.go;
+    if(n===2) st.q=0;
+    if(n===4) st.booked=false;
+    go(n);
+  });
+
+  /* שאלון */
+  function opt(cls,role,key,val,label,small,on){
+    return '<button type="button" class="ap-opt'+cls+'" role="'+role+'" data-k="'+key+'" data-v="'+val+'" aria-checked="'+on+'"><span class="ot">'+esc(label)+(small?'<small>'+esc(small)+'</small>':'')+'</span><span class="mk"></span></button>';
+  }
+  function answered(q){if(q.type==="multi"||q.type==="range")return true;if(q.type==="two")return !!(st.a.mode&&st.a.time);if(q.type==="who")return !!st.a.who&&(st.a.who!=="self"||!!st.a.age);return !!st.a[q.k]}
+  function pills(k,label,o){return '<div class="ap-group"><b>'+label+'</b><div class="ap-pills" role="radiogroup" aria-label="'+label+'">'+o.map(function(x){return '<button type="button" class="ap-pill" role="radio" data-k="'+k+'" data-v="'+x[0]+'" aria-checked="'+(st.a[k]===x[0])+'">'+esc(x[1])+'</button>'}).join("")+'</div></div>'}
+  function renderQuiz(){
+    var q=Q[st.q],a=st.a,h="";
+    $("q-count").textContent="שאלה "+(st.q+1)+" מתוך "+Q.length;
+    $("q-prog").querySelectorAll("span").forEach(function(s,i){s.classList.toggle("on",i<=st.q)});
+    $("q-title").textContent=q.t; $("q-sub").textContent=q.sub; $("q-hint").textContent="";
+    if(q.type==="single"){h='<div class="ap-opts" role="radiogroup" aria-label="'+esc(q.t)+'">'+q.o.map(function(o){return opt("","radio",q.k,o[0],o[1],o[2],a[q.k]===o[0])}).join("")+'</div>'}
+    if(q.type==="multi"){h='<div class="ap-opts" role="group" aria-label="'+esc(q.t)+'">'+q.o.map(function(o){return opt(" multi","checkbox",q.k,o[0],o[1],"",a.topics.indexOf(o[0])>-1)}).join("")+'</div>'}
+    if(q.type==="who"){h='<div class="ap-opts" role="radiogroup" aria-label="'+esc(q.t)+'">'+q.o.map(function(o){return opt("","radio","who",o[0],o[1],"",a.who===o[0])}).join("")+'</div>';
+      if(a.who==="self") h+='<div class="ap-age">'+pills("age","בן/בת כמה את/ה?",q.ages)+'</div>'}
+    if(q.type==="two"){h=q.g.map(function(gr){return pills(gr.k,gr.l,gr.o)}).join("")}
+    if(q.type==="range"){h='<div class="ap-range"><output class="ap-range-v" id="q-pv" for="q-p">'+priceLabel(a.pmax)+'</output>'
+      +'<input type="range" id="q-p" min="'+PMIN+'" max="'+PMAXV+'" step="10" value="'+a.pmax+'" aria-label="מחיר מקסימלי לפגישה" aria-valuetext="'+priceLabel(a.pmax)+'">'
+      +'<div class="ap-range-ends"><span>170 ₪, בהסדר</span><span>כל מחיר</span></div>'
+      +'<p class="ap-small">בפרטי פגישה עולה בדרך כלל 250 עד 600 ₪.</p></div>'}
+    $("q-body").innerHTML=h;
+    var last=st.q===Q.length-1;
+    $("q-next").textContent=last?"להציג מטפלים":(q.type==="multi"&&!a.topics.length?"לדלג":"המשך");
+    $("q-next").classList.toggle("is-wait",!answered(q));
+  }
+  $("q-body").addEventListener("click",function(e){
+    var b=e.target.closest("[data-k]"); if(!b) return;
+    var k=b.dataset.k,v=b.dataset.v,a=st.a;
+    if(k==="topics"){
+      if(v==="none"){a.topics=a.topics.indexOf("none")>-1?[]:["none"]}
+      else{a.topics=a.topics.filter(function(x){return x!=="none"});var i=a.topics.indexOf(v);if(i>-1)a.topics.splice(i,1);else a.topics.push(v)}
+    } else {a[k]=v; if(k==="who"&&v!=="self") a.age=null}
+    renderQuiz();
+  });
+  $("q-body").addEventListener("input",function(e){
+    if(e.target.id!=="q-p") return;
+    var v=+e.target.value; st.a.pmax=v;
+    $("q-pv").textContent=priceLabel(v); e.target.setAttribute("aria-valuetext",priceLabel(v));
+  });
+  $("q-next").addEventListener("click",function(){
+    var q=Q[st.q];
+    if(!answered(q)){$("q-hint").textContent=q.type==="two"?"בחר/י גם איפה וגם מתי. אם אין העדפה, אפשר \"לא משנה\".":(q.type==="who"&&st.a.who==="self")?"בחר/י גם גיל, כדי שנציע מי שעובד עם הגיל הזה.":"בחר/י תשובה אחת כדי להמשיך.";return}
+    if(st.q<Q.length-1){st.q++;renderQuiz();$("q-in").scrollTop=0}
+    else{match();st.t=null;st.slot=null;go(3)}
+  });
+  $("q-back").addEventListener("click",function(){if(st.q>0){st.q--;renderQuiz()}else go(1)});
+
+  /* אפשרויות */
+  function renderOptions(){
+    var L=st.list,best=L[0],h="";
+    if(!best.exact){$("o-title").textContent="אין כרגע התאמה מדויקת. אלה הכי קרובים."}
+    else if(L.length===1){$("o-title").textContent=g(best.t,"מצאנו מטפלת אחת עם מקום השבוע","מצאנו מטפל אחד עם מקום השבוע")}
+    else{$("o-title").textContent=L.length+" מטפלים עם מקום השבוע"}
+    $("o-sub").textContent=L.length>1?"לפי מה שסיפרת. הראשון הכי מתאים, ואפשר לבחור כל אחד.":"לפי מה שסיפרת.";
+    L.forEach(function(r,i){
+      var t=r.t,s=slotsOf(t)[0];
+      h+='<button type="button" class="ap-card'+(i===0?' best':'')+'" data-i="'+i+'">'
+        +(i===0&&L.length>1?'<span class="tag">'+(r.exact?"הכי מתאים לתשובות שלך":"הכי קרוב לתשובות שלך")+'</span>':'')
+        +'<span class="av">'+g(t,"פנויה השבוע","פנוי השבוע")+' · '+s.d+' '+s.t+'</span>'
+        +'<span class="nm">'+esc(t.n)+' <span>· '+esc(t.role)+'</span></span>'
+        +(r.why.length?'<span class="why">'+esc(r.why.join(" · "))+'</span>':'')
+        +(r.warn.length?'<span class="warn">שימו לב: '+esc(r.warn.join(" · "))+'</span>':'')
+        +'<span class="pr">'+(t.kupa?"170 ₪ בהסדר עם הקופה":t.price+" ₪ לפגישה, פרטי")+'</span>'
+        +'<span class="go">'+g(t,"להכיר את ","להכיר את ")+esc(first(t))+' ←</span>'
+        +'</button>';
+    });
+    $("o-cards").innerHTML=h;
+  }
+  $("o-cards").addEventListener("click",function(e){
+    var b=e.target.closest(".ap-card"); if(!b) return;
+    st.t=st.list[+b.dataset.i].t; st.slot=null; st.booked=false; go(4);
+  });
+  $("o-back").addEventListener("click",function(){st.q=Q.length-1;go(2)});
+  $("o-change").addEventListener("click",function(){st.q=0;go(2)});
+
+  /* היכרות */
+  function renderIntro(){
+    var t=st.t,r=score(t);
+    $("i-title").textContent=first(t)+" "+g(t,"יכולה","יכול")+" לפגוש "+obj()+" השבוע.";
+    $("i-name").textContent=t.n+" · "+t.role;
+    $("i-lic").textContent=t.lic;
+    $("i-quote").textContent="“"+t.q+"”";
+    $("i-why").innerHTML=r.why.length?"<b>למה "+esc(first(t))+":</b> "+esc(r.why.join(" · ")):"";
+    $("i-slots").innerHTML=slotsOf(t).map(function(s,i){var on=st.slot&&st.slot.d===s.d&&st.slot.t===s.t;return '<button type="button" class="ap-slot" data-i="'+i+'" aria-pressed="'+!!on+'"><span>'+s.d+'</span><b>'+s.t+'</b></button>'}).join("");
+    $("i-conf").textContent=first(t)+" "+g(t,"אישרה","אישר")+" את השעות האלה "+t.conf+".";
+    $("i-price").innerHTML=t.kupa?"<div>170 ₪ לפגישה, בהסדר עם הקופה</div><span>הפגישה הראשונה 70 ₪</span>":"<div>"+t.price+" ₪ לפגישה, פרטי</div><span>בלי התחייבות להמשך</span>";
+    $("i-hint").textContent="";
+    var c=$("i-cta");
+    if(st.slot){c.textContent="לקבוע את "+st.slot.d+" ב-"+st.slot.t;c.classList.remove("is-wait")}
+    else{c.textContent="לבחור שעה כדי להמשיך";c.classList.add("is-wait")}
+  }
+  $("i-slots").addEventListener("click",function(e){
+    var b=e.target.closest(".ap-slot"); if(!b) return;
+    st.slot=slotsOf(st.t)[+b.dataset.i]; renderIntro();
+  });
+  $("i-cta").addEventListener("click",function(){
+    if(!st.slot){$("i-hint").textContent="בחר/י אחת מהשעות למעלה.";return}
+    st.booked=false; go(5);
+  });
+
+  /* אישור */
+  function renderBook(){
+    var t=st.t; if(!st.slot) st.slot=slotsOf(t)[0];
+    var s=st.slot,w=whereOf(t),fn=first(t);
+    $("b-form").hidden=st.booked; $("b-done").hidden=!st.booked;
+    $("b-sum").textContent=s.d+", "+s.date+" · "+s.t+" · "+w;
+    $("b-always").textContent=fn+" "+g(t,"תקבל","יקבל")+" תמיד: שם פרטי, טלפון, השעה, ו"+forText()+".";
+    $("b-share-l").textContent="לשתף את "+fn+" גם בתשובות שלי מהשאלון";
+    var ex=extras();
+    $("b-preview").innerHTML=ex.length?ex.map(function(x){return "<li>"+esc(x)+"</li>"}).join(""):"<li>לא סימנת בשאלון דברים נוספים לשתף.</li>";
+    $("b-preview").classList.toggle("on",st.share);
+    $("ap-share").checked=st.share;
+    if(st.booked){
+      $("d-title").textContent=st.name?"נקבע, "+st.name+".":"נקבע.";
+      $("d-line").textContent="יום "+s.d+", "+s.date+", בשעה "+s.t+". עם "+fn+", "+w+".";
+      $("d-msg").textContent=fn+" "+g(t,"תאשר","יאשר")+" סופית עד 20:00 היום, ואז "+g(t,"תשלח","ישלח")+" לך "+(w==="אונליין"?"קישור לפגישה.":"את הכתובת של הקליניקה.");
+      $("d-decline").textContent="אם "+fn+" "+g(t,"תגיד","יגיד")+" שזה לא מתאים, נציע לך מיד מישהו אחר עם מקום השבוע. לא צריך למלא שוב כלום.";
+      $("d-rem").textContent="ביום "+s.rem+" בערב נשלח לך תזכורת.";
+      $("d-side").textContent="לראות את הצד של "+fn;
+    }
+  }
+  function forText(){var a=st.a;return a.who==="self"||!a.who?"שהטיפול בשבילך, "+(AGE[a.age]||"בגיל 26 עד 64"):"שזה "+FOR[a.who]}
+  function extras(){
+    var a=st.a,x=[],tp=(a.topics||[]).filter(function(k){return TOPIC[k]});
+    if(tp.length) x.push("מה מעסיק אותך: "+tp.map(function(k){return TOPIC[k]}).join(", "));
+    if(a.style) x.push("איזה טיפול ירגיש נכון: "+STYLEQ[a.style]);
+    return x;
+  }
+  $("ap-share").addEventListener("change",function(e){st.share=e.target.checked;$("b-preview").classList.toggle("on",st.share)});
+  $("b-ok").addEventListener("click",function(){st.name=$("ap-name").value.trim().slice(0,20);st.booked=true;st.req=0;renderBook();$("b-done").scrollTop=0});
+
+  /* וואטסאפ */
+  function msg(cls,html,time){return '<div class="wa-msg '+cls+'">'+html+'<small>'+time+'</small></div>'}
+  function renderChat(){
+    var t=st.t||T[0],fn=first(t),sl=t.slots[slotKey(t)];
+    $("wa-sub").textContent="ההודעה השבועית ל"+fn;
+    var h='<div class="wa-day">יום שני</div>'+msg("wa-in","בוקר טוב "+esc(fn)+". יש לך מקום למטופלים חדשים השבוע? אפשר לענות במספר.","08:30");
+    if(st.wa===0) h+='<div class="wa-replies" data-k="n"><button type="button">0</button><button type="button">1</button><button type="button">2</button><button type="button">3</button></div>';
+    if(st.wa>=1){
+      h+=msg("wa-out",esc(st.n),"08:41");
+      if(st.n==="0") h+=msg("wa-in","תודה. נשאל שוב בשבוע הבא.","08:41");
+      else{
+        h+=msg("wa-in","תודה. באילו שעות?","08:41");
+        if(st.wa===1) h+='<div class="wa-replies" data-k="h"><button type="button">רביעי '+sl[0]+', חמישי '+sl[1]+'</button><button type="button">רק רביעי '+sl[0]+'</button><button type="button">אכתוב שעות אחרות</button></div>';
+      }
+    }
+    if(st.wa>=2){
+      h+=msg("wa-out",esc(st.h),"08:42");
+      h+=msg("wa-in","מעולה. אם מישהו יבחר שעה, נשלח לך שם פרטי, טלפון והשעה. שום דבר מעבר לזה.","08:42");
+      var who=st.name||"עמית",s=st.slot||{d:"רביעי",t:sl[0]},a=st.a;
+      var req='<span class="ln"><b>בקשה חדשה לפגישה ראשונה</b></span>'
+        +'<span class="ln">'+esc(who)+' · '+esc(a.who==="self"||!a.who?"לעצמו/ה, "+(AGE[a.age]||"בגיל 26 עד 64"):FOR[a.who])+'</span>'
+        +'<span class="ln">יום '+esc(s.d)+' ב-'+esc(s.t)+' · '+esc(whereOf(t))+'</span>';
+      var ex=extras();
+      req+=(st.share&&ex.length)?ex.map(function(x){return '<span class="ln">'+esc(x)+'</span>'}).join(""):'<span class="ln">לא שיתף/ה פרטים נוספים מהשאלון.</span>';
+      req+='<span class="ln">לאשר עד 20:00?</span>';
+      h+=msg("wa-in",req,"12:40");
+      if(st.req===0) h+='<div class="wa-replies" data-k="r"><button type="button">לאשר</button><button type="button">לא מתאים לי</button></div>';
+      if(st.req===1){h+=msg("wa-out","לאשר","12:52")+msg("wa-in","מעולה. שלחנו ל"+esc(who)+" אישור. הטלפון: 050-0000000 (לדוגמה). נזכיר לשניכם יום לפני.","12:52")}
+      if(st.req===2){h+=msg("wa-out","לא מתאים לי","12:52")+msg("wa-in","תודה שעדכנת. נציע ל"+esc(who)+" מטפל אחר עם מקום השבוע. לא צריך להסביר.","12:52")}
+    }
+    var c=$("wa-chat"); c.innerHTML=h; c.scrollTop=c.scrollHeight;
+  }
+  $("wa-chat").addEventListener("click",function(e){
+    var b=e.target.closest(".wa-replies button"); if(!b) return;
+    var k=b.parentNode.dataset.k;
+    if(k==="n"){st.n=b.textContent;st.wa=1}else if(k==="h"){st.h=b.textContent;st.wa=2}else{st.req=b.textContent==="לאשר"?1:2}
+    renderChat();
+  });
+  $("wa-reset").addEventListener("click",function(){st.wa=0;st.n=null;st.h=null;st.req=0;renderChat()});
+})();
+</script>
+<script>
+(function(){
+  var mq=window.matchMedia("(min-width:900px) and (min-height:760px)");
+  var items=[].slice.call(document.querySelectorAll(".flow-steps li"));
+  var phone=document.querySelector(".ap-phone");
+  if(!("IntersectionObserver" in window)) return;
+  var io=new IntersectionObserver(function(es){
+    if(!mq.matches) return;
+    es.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var b=e.target.querySelector(".dm-step");
+      if(b&&b.getAttribute("aria-pressed")!=="true") b.click();
+    });
+  },{rootMargin:"-38% 0px -50% 0px",threshold:0});
+  items.forEach(function(li){io.observe(li)});
+  document.querySelectorAll(".dm-step").forEach(function(b){
+    b.addEventListener("click",function(ev){
+      if(!mq.matches&&ev.isTrusted&&phone){
+        var r=phone.getBoundingClientRect();
+        if(r.bottom<0||r.top>window.innerHeight*0.6) phone.scrollIntoView({block:"center",behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
