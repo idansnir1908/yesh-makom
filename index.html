@@ -419,6 +419,8 @@ img{max-width:100%}
               <div class="ap-sum"><span id="b-sum"></span><button type="button" class="ap-link" data-go="4">לשנות</button></div>
               <label class="ap-field" for="ap-name">שם פרטי<input id="ap-name" type="text" autocomplete="off" placeholder="לדוגמה: עמית"></label>
               <label class="ap-field" for="ap-tel">טלפון<input id="ap-tel" type="tel" inputmode="tel" autocomplete="off" placeholder="050-0000000" dir="ltr"></label>
+              <label class="ap-field" for="ap-age" id="b-age-l"><span id="b-age-t">הגיל שלך</span><input id="ap-age" type="number" inputmode="numeric" min="1" max="120" autocomplete="off" placeholder="לדוגמה: 34" dir="ltr"></label>
+              <p class="ap-hint" id="b-hint" aria-live="polite"></p>
               <div class="ap-share">
                 <p class="ap-small" id="b-always"></p>
                 <label class="ap-consent" for="ap-share"><input type="checkbox" id="ap-share"><span id="b-share-l"></span></label>
@@ -855,6 +857,7 @@ img{max-width:100%}
     var s=st.slot,w=whereOf(t),fn=first(t);
     $("b-form").hidden=st.booked; $("b-done").hidden=!st.booked;
     $("b-sum").textContent=s.d+", "+s.date+" · "+s.t+" · "+w;
+    var na=needAge(); $("b-age-l").hidden=!na; $("b-age-t").textContent=ageLabel(); $("b-hint").textContent="";
     $("b-always").textContent=fn+" "+g(t,"תקבל","יקבל")+" תמיד: שם פרטי, טלפון, השעה, ו"+forText()+".";
     $("b-share-l").textContent="לשתף את "+fn+" גם בתשובות שלי מהשאלון";
     var ex=extras();
@@ -870,7 +873,7 @@ img{max-width:100%}
       $("d-side").textContent="לראות את הצד של "+fn;
     }
   }
-  function forText(){var a=st.a;return a.who==="self"||!a.who?"שהטיפול בשבילך, "+(AGE[a.age]||"בגיל 26 עד 64"):"שזה "+FOR[a.who]}
+  function forText(){var a=st.a;return (a.who==="self"||!a.who)?"שהטיפול בשבילך, והגיל שלך":(a.who==="child"||a.who==="teen")?"שזה "+FOR[a.who].split(" ")[0]+", והגיל":"שזה "+FOR[a.who]}
   function extras(){
     var a=st.a,x=[],tp=(a.topics||[]).filter(function(k){return TOPIC[k]});
     if(tp.length) x.push("מה מעסיק אותך: "+tp.map(function(k){return TOPIC[k]}).join(", "));
@@ -878,7 +881,11 @@ img{max-width:100%}
     return x;
   }
   $("ap-share").addEventListener("change",function(e){st.share=e.target.checked;$("b-preview").classList.toggle("on",st.share)});
-  $("b-ok").addEventListener("click",function(){st.name=$("ap-name").value.trim().slice(0,20);st.booked=true;st.req=0;renderBook();$("b-done").scrollTop=0});
+  function needAge(){var w=st.a.who;return !w||w==="self"||w==="child"||w==="teen"}
+  function ageLabel(){var w=st.a.who;return w==="child"?"גיל הילד/ה":w==="teen"?"גיל הנער/ה":"הגיל שלך"}
+  $("b-ok").addEventListener("click",function(){
+    if(needAge()){var v=parseInt($("ap-age").value,10); if(!(v>=1&&v<=120)){$("b-hint").textContent="צריך גיל, כדי שהמטפל יידע למי הפגישה.";$("ap-age").focus();return} st.ageN=v}
+    st.name=$("ap-name").value.trim().slice(0,20);st.booked=true;st.req=0;renderBook();$("b-done").scrollTop=0});
 
   /* וואטסאפ */
   function msg(cls,html,time){return '<div class="wa-msg '+cls+'">'+html+'<small>'+time+'</small></div>'}
@@ -900,7 +907,7 @@ img{max-width:100%}
       h+=msg("wa-in","מעולה. אם מישהו יבחר שעה, נשלח לך שם פרטי, טלפון והשעה. שום דבר מעבר לזה.","08:42");
       var who=st.name||"עמית",s=st.slot||{d:"רביעי",t:sl[0]},a=st.a;
       var req='<span class="ln"><b>בקשה חדשה לפגישה ראשונה</b></span>'
-        +'<span class="ln">'+esc(who)+' · '+esc(a.who==="self"||!a.who?"לעצמו/ה, "+(AGE[a.age]||"בגיל 26 עד 64"):FOR[a.who])+'</span>'
+        +'<span class="ln">'+esc(who)+' · '+esc((a.who==="self"||!a.who)?"לעצמו/ה, בגיל "+(st.ageN||34):a.who==="child"?"לילד/ה, בגיל "+(st.ageN||9):a.who==="teen"?"לנער/ה, בגיל "+(st.ageN||15):FOR[a.who])+'</span>'
         +'<span class="ln">יום '+esc(s.d)+' ב-'+esc(s.t)+' · '+esc(whereOf(t))+'</span>';
       var ex=extras();
       req+=(st.share&&ex.length)?ex.map(function(x){return '<span class="ln">'+esc(x)+'</span>'}).join(""):'<span class="ln">לא שיתף/ה פרטים נוספים מהשאלון.</span>';
@@ -923,7 +930,7 @@ img{max-width:100%}
   function resetAll(){
     st.q=0; st.a={who:null,age:null,topics:[],style:null,mode:null,time:null,pmax:350};
     st.list=[]; st.t=null; st.slot=null; st.booked=false; st.name=""; st.share=false; st.req=0; st.wa=0; st.n=null; st.h=null;
-    var n1=$("ap-name"),n2=$("ap-tel"); if(n1) n1.value=""; if(n2) n2.value="";
+    st.ageN=null; var n1=$("ap-name"),n2=$("ap-tel"),n3=$("ap-age"); if(n1) n1.value=""; if(n2) n2.value=""; if(n3) n3.value="";
     go(2);
   }
   $("wa-reset").addEventListener("click",resetAll);
