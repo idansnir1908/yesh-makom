@@ -2,6 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8">
+<meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <meta name="description" content="יש מקום למטפלים: מטופלים חדשים בשעות שכבר פנויות לך השבוע.">
@@ -15,15 +16,10 @@
 :root{
   --bg:#edf1ec; --band:#e3e9e2; --surface:#ffffff; --surface-2:#dfe6df; --line:#cfdad3; --fg:#18201c; --muted:#56615b;
   --accent:#1f5b51; --accent-ink:#1d554b; --accent-soft:#d9e9e1; --on-accent:#ffffff;
+  color-scheme:light;
   --display:"Frank Ruhl Libre",Georgia,"Times New Roman",serif;
   --font:"Assistant","Segoe UI","Arial Hebrew",Arial,sans-serif; --r:16px;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#101412; --band:#151a18; --surface:#1c2220; --surface-2:#28302d; --line:#2e3935; --fg:#e8ece9; --muted:#9aa5a0;
-  --accent:#6fb8a5; --accent-ink:#8fd0bf; --accent-soft:#1f3832; --on-accent:#0f1513; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#101412; --band:#151a18; --surface:#1c2220; --surface-2:#28302d; --line:#2e3935; --fg:#e8ece9; --muted:#9aa5a0;
-  --accent:#6fb8a5; --accent-ink:#8fd0bf; --accent-soft:#1f3832; --on-accent:#0f1513; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:18px;line-height:1.65;-webkit-text-size-adjust:100%}
 .page{direction:rtl}
