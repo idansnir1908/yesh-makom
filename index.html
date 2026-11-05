@@ -907,7 +907,12 @@ img{max-width:100%}
   function needAge(){var w=st.a.who;return !w||w==="self"||w==="child"||w==="teen"}
   function ageLabel(){var w=st.a.who;return w==="child"?"גיל הילד/ה":w==="teen"?"גיל הנער/ה":"הגיל שלך"}
   $("b-ok").addEventListener("click",function(){
-    if(needAge()){var v=parseInt($("ap-age").value,10); if(!(v>=1&&v<=120)){$("b-hint").textContent="צריך גיל, כדי שהמטפל יידע למי הפגישה.";$("ap-age").focus();return} st.ageN=v}
+    if(needAge()){var v=parseInt($("ap-age").value,10); if(!(v>=1&&v<=120)){$("b-hint").textContent="צריך גיל, כדי שהמטפל יידע למי הפגישה.";$("ap-age").focus();return}
+      var RG={young:[18,25,"18 עד 25"],adult:[26,64,"26 עד 64"],older:[65,120,"65 ומעלה"],child:[1,12,"עד גיל 12"],teen:[13,18,"13 עד 18"]};
+      var key=(st.a.who==="self"||!st.a.who)?st.a.age:st.a.who;
+      if(key&&RG[key]&&(v<RG[key][0]||v>RG[key][1])){$("b-hint").textContent="הגיל "+v+" לא מתאים למה שבחרת בשאלון ("+RG[key][2]+"). אפשר לתקן את הגיל, או לחזור לשאלון ולשנות.";$("ap-age").focus();return}
+      if(!key&&v<18){$("b-hint").textContent="טיפול לעצמך הוא מגיל 18. לטיפול לנער או לנערה, אפשר לחזור לשאלון ולבחור את זה.";$("ap-age").focus();return}
+      st.ageN=v}
     st.name=$("ap-name").value.trim().slice(0,20);st.booked=true;st.req=0;renderBook();$("b-done").scrollTop=0});
 
   /* וואטסאפ */
